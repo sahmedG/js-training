@@ -10,4 +10,4 @@
   console.log('Original person:', person);
   console.log('Clone 1:', clone1);
   console.log('Clone 2:', clone2);
-  console.log('Same Person:', samePerson);
+  console.log('Same Person:', person);
