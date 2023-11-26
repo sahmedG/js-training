@@ -60,6 +60,9 @@ function superTypeOf(value) {
         } else {
             return 'Object';
         }
-    }
+    } else if (type === 'undefined') {
+        return 'undefined';
+      }
     return type.charAt(0).toUpperCase() + type.slice(1);
 }
+
