@@ -1,9 +1,3 @@
-const person = {
-    name: 'John',
-    age: 30,
-    country: 'US'
-  };
-
   const clone1 = { ...person };
 
   const clone2 = Object.assign({}, person);
