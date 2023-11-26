@@ -1,6 +1,7 @@
   const clone1 = { ...person };
   const clone2 = Object.assign({}, person);
-
+  Object.freeze(clone1);
+  Object.freeze(clone2);
   var samePerson = structuredClone(person);
 
   person.age += 1;
