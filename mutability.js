@@ -1,8 +1,7 @@
   const clone1 = { ...person };
-
   const clone2 = Object.assign({}, person);
 
-  const samePerson = structuredClone(person);
+  var samePerson = structuredClone(person);
 
   person.age += 1;
   person.country = 'FR';
