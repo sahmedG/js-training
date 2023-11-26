@@ -6,3 +6,16 @@ function get(sourceObject, key) {
     sourceObject[key] = value;
     return value;
   }
+
+// const sourceObject = {
+//     num: 42,
+//     bool: true,
+//     str: 'some text',
+//     log: console.log,
+//   }
+
+//   let ageValue = get(sourceObject, 'num');
+//   console.log(ageValue);
+
+//   let updatedAge = set(sourceObject, 'num', 31);
+//   console.log(sourceObject);
