@@ -1,3 +1,4 @@
-const circual= {
-    circual:null,
+const circular= {
+    circular:null,
 };
+circular.circular = circular;
