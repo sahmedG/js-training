@@ -2,7 +2,7 @@
 
   const clone2 = Object.assign({}, person);
 
-  const samePerson = { ...person };
+  const samePerson = structuredClone(person);
 
   person.age += 1;
   person.country = 'FR';
@@ -11,3 +11,4 @@
   console.log('Clone 1:', clone1);
   console.log('Clone 2:', clone2);
   console.log('Same Person:', person);
+  console.log(person===samePerson);
