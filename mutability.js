@@ -1,8 +1,22 @@
+function deepClone(obj) {
+    if (obj === null || typeof obj !== 'object') {
+      return obj;
+    }
+
+    if (Array.isArray(obj)) {
+      return obj.map(deepClone);
+    }
+
+    return Object.fromEntries(
+      Object.entries(obj).map(([key, value]) => [key, deepClone(value)])
+    );
+  }
+
   const clone1 = { ...person };
 
   const clone2 = Object.assign({}, person);
 
-  const samePerson = structuredClone(person);
+  const samePerson = deepClone(person);
 
   person.age += 1;
   person.country = 'FR';
