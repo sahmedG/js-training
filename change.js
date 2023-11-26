@@ -1,8 +1,9 @@
-function get(sourceObject, key) {
+
+function get(key) {
     return sourceObject[key];
 }
 
-function set(sourceObject, key, value) {
+function set(key, value) {
     sourceObject[key] = value;
     return value;
 }
