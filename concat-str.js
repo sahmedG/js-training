@@ -1,3 +1,3 @@
-function concatStr(str1, str2) {
-    return str1 + str2;
-  }
+function concatStr(x, y) {
+  return x.toString() + y.toString();
+}
