@@ -1,4 +1,4 @@
-let str = "test"
-let num = 10
-let bool = true
-let variable = undefined
+const str = "Hello, World!";  
+const num = 42;
+const bool = true;
+const undef = undefined;
