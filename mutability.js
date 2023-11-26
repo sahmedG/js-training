@@ -1,14 +1,10 @@
   const clone1 = { ...person };
-  const clone2 = Object.assign({}, person);
+  const clone2 = { ...person };
   Object.freeze(clone1);
   Object.freeze(clone2);
-  var samePerson = person;
+  var samePerson = { ...person };
 
   person.age += 1;
   person.country = 'FR';
 
-  console.log('Original person:', person);
-  console.log('Clone 1:', clone1);
-  console.log('Clone 2:', clone2);
-  console.log('Same Person:', person);
-  console.log(person===samePerson);
+  samePerson = person;
