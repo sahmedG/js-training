@@ -1,9 +1,15 @@
-function reverse(inputData) {
-    if (typeof inputData === 'string') {
-      return inputData.split('').reverse().join('');  // Reversing a string using split, reverse, and join
-    } else if (Array.isArray(inputData)) {
-      return inputData.slice().reverse();  // Reversing an array using slice and reverse
-    } else {
-      throw new Error("Input must be a string or an array");
-    }
-  }
+function reverse(input) {
+   if (Array.isArray(input)) {
+        let res = [];
+        for (let i = input.length - 1; i >= 0; i--) {
+            res.push(input[i]);
+        }
+        return res;
+    } else if (typeof input === "string") {
+        let res = "";
+        for (let i = input.length - 1; i >= 0; i--) {
+            res += input[i];
+        }
+        return res;
+    } 
+}
