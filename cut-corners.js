@@ -1,16 +1,17 @@
 function round(num) {
-    const decimalPart = num - Math.trunc(num);
-    return decimalPart >= 0.5 ? Math.ceil(num) : Math.floor(num);
+    const integerPart = num < 0 ? Math.ceil(num) : Math.floor(num);
+    const decimalPart = num - integerPart;
+    return decimalPart >= 0.5 ? integerPart + 1 : integerPart;
   }
   
   function ceil(num) {
-    return num >= 0 ? Math.ceil(num) : Math.trunc(num);
+    return num >= 0 ? (num === Math.trunc(num) ? num : Math.trunc(num) + 1) : Math.trunc(num);
   }
   
   function floor(num) {
-    return num >= 0 ? Math.floor(num) : Math.trunc(num);
+    return num >= 0 ? Math.trunc(num) : (num === Math.trunc(num) ? num : Math.trunc(num) - 1);
   }
   
   function trunc(num) {
-    return num >= 0 ? Math.trunc(num) : Math.ceil(num);
+    return num >= 0 ? (num === Math.trunc(num) ? num : Math.trunc(num)) : (num === Math.trunc(num) ? num : Math.trunc(num) - 1);
   }
