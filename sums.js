@@ -1,4 +1,7 @@
 function sums(number) {
+    if (number < 2){
+        return [];
+    };
     const result = [];
     function generatePartitions(target, currentPartition) {
       if (target === 0) {
