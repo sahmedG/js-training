@@ -1,10 +1,12 @@
 function multiply(a, b) {
     let result = 0;
+    const isNegative = (a < 0 && b > 0) || (a > 0 && b < 0);
+  
     for (let i = 0; i < Math.abs(b); i++) {
-      result += a;
+      result += Math.abs(a);
     }
   
-    return result;
+    return isNegative ? -result : result;
   }
   
   function divide(a, b) {
