@@ -4,11 +4,7 @@ function multiply(a, b) {
       result += a;
     }
   
-    if ((a < 0 && b > 0) || (a > 0 && b < 0)) {
-      result = -result;
-    }
-  
-    return result;
+    return (a < 0 && b > 0) || (a > 0 && b < 0) ? -result : result;
   }
   
   function divide(a, b) {
@@ -24,15 +20,10 @@ function multiply(a, b) {
       dividend -= divisor;
       quotient++;
     }
-
-    if ((a < 0 && b > 0) || (a > 0 && b < 0)) {
-      quotient = -quotient;
-    }
   
-    return quotient;
+    return (a < 0 && b > 0) || (a > 0 && b < 0) ? -quotient : quotient;
   }
   
-
   function modulo(a, b) {
     if (b === 0) {
       throw new Error("Cannot find modulo with divisor zero");
@@ -45,9 +36,5 @@ function multiply(a, b) {
       dividend -= divisor;
     }
   
-    if (a < 0) {
-      dividend = -dividend;
-    }
-  
-    return dividend;
+    return a < 0 ? -dividend : dividend;
   }
