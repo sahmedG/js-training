@@ -4,5 +4,6 @@ function triangle(character, height) {
     for (let i = 1; i < height; i++) {
       result += character.repeat(i) + '\n';
     }
+    result += character.repeat(height)
     return result;
   }
