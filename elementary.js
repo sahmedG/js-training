@@ -4,7 +4,7 @@ function multiply(a, b) {
       result += a;
     }
   
-    return (a < 0 && b > 0) || (a > 0 && b < 0) ? -result : result;
+    return result;
   }
   
   function divide(a, b) {
@@ -21,7 +21,7 @@ function multiply(a, b) {
       quotient++;
     }
   
-    return (a < 0 && b > 0) || (a > 0 && b < 0) ? -quotient : quotient;
+    return quotient;
   }
   
   function modulo(a, b) {
@@ -36,5 +36,5 @@ function multiply(a, b) {
       dividend -= divisor;
     }
   
-    return a < 0 ? -dividend : dividend;
+    return dividend;
   }
