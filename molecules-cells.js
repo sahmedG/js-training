@@ -1,7 +1,7 @@
 function RNA(dnaStrand) {
     // Check if the input is a valid DNA strand
     if (!isValidDNA(dnaStrand)) {
-      throw new Error("Invalid DNA strand. Please provide a valid uppercase DNA sequence.");
+      return '';
     }
   
     // Convert DNA to RNA
@@ -18,7 +18,7 @@ function RNA(dnaStrand) {
           case 'A':
             return 'U';
           default:
-            throw new Error("Invalid DNA nucleotide: " + nucleotide);
+            return '';
         }
       })
       .join('');
@@ -28,7 +28,7 @@ function RNA(dnaStrand) {
   
   function DNA(rnaStrand) {
     if (!isValidRNA(rnaStrand)) {
-      throw new Error("Invalid RNA strand. Please provide a valid uppercase RNA sequence.");
+      return '';
     }
   
     const dnaStrand = rnaStrand
@@ -44,7 +44,7 @@ function RNA(dnaStrand) {
           case 'U':
             return 'A';
           default:
-            throw new Error("Invalid RNA nucleotide: " + nucleotide);
+            return '';
         }
       })
       .join('');
