@@ -13,7 +13,7 @@ function multiply(a, b) {
     if (b === 0) {
       throw new Error("Cannot divide by zero");
     }
-  
+    const isNegative = (a < 0 && b > 0) || (a > 0 && b < 0);
     let quotient = 0;
     let divisor = Math.abs(b);
     let dividend = Math.abs(a);
@@ -23,7 +23,7 @@ function multiply(a, b) {
       quotient++;
     }
   
-    return quotient;
+    return isNegative ? -quotient : quotient;
   }
   
   function modulo(a, b) {
