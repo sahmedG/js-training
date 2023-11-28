@@ -30,7 +30,7 @@ function multiply(a, b) {
     if (b === 0) {
       throw new Error("Cannot find modulo with divisor zero");
     }
-  
+    const isNegative = (a < 0 && b > 0) || (a > 0 && b < 0);
     let dividend = Math.abs(a);
     let divisor = Math.abs(b);
   
@@ -38,5 +38,5 @@ function multiply(a, b) {
       dividend -= divisor;
     }
   
-    return dividend;
+    return isNegative ? -dividend : dividend;
   }
