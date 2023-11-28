@@ -19,5 +19,6 @@ function sums(number) {
     const uniquePartitions = Array.from(new Set(result.map(partition => partition.sort().join(','))))
       .map(partitionString => partitionString.split(',').map(Number));
     uniquePartitions.sort((a, b) => a[0] - b[0] || a.length - b.length);
+    uniquePartitions.pop()
     return uniquePartitions;
   }
