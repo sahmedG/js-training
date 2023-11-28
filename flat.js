@@ -1,13 +1,14 @@
-function flat(arr) {
-    let result = [];
-  
-    for (let i = 0; i < arr.length; i++) {
-      if (Array.isArray(arr[i])) {
-        result = result.concat(flat(arr[i]));
-      } else {
-        result.push(arr[i]);
-      }
+function flat(array, depth) {
+    if (!Array.isArray(array)) {
+        return array;
     }
-  
-    return result;
-  }
+    if (depth === 0) {
+        return array;
+    }
+    if (depth === undefined) {
+        depth = 1;
+    }
+    return array.reduce((accuracy, current) => {
+        return accuracy.concat(flat(current, depth - 1));
+    }, []);
+}
