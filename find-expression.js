@@ -1,5 +1,5 @@
 function findExpression(number) {
-    for (let i = 0; i < 100000; i++) {
+    for (let i = 0; i < 201; i++) {
         let copy = 1;
         let sequence = "1";
         while (copy <= number) {
