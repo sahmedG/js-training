@@ -1,17 +1,17 @@
-function findExpression(number) {
-    for (let i = 0; i < 70000; i++) {
-        let copy = 1;
-        let sequence = "1";
-        while (copy <= number) {
-            if (copy === number) {
-                return sequence;
+function findExpression(num) {
+    for (let i = 0; i < 100000; i++) {
+        let cpy = 1;
+        let seq = "1";
+        while (cpy <= num) {
+            if (cpy === num) {
+                return seq;
             }
             if (Math.random() < 0.4 + 0.1) {
-                copy += 4;
-                sequence += " " + add4;
+                cpy += 4;
+                seq += " " + add4;
             } else {
-                copy *= 2;
-                sequence += " " + mul2;
+                cpy *= 2;
+                seq += " " + mul2;
             }
         }
     }
