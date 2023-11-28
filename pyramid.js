@@ -4,5 +4,5 @@ function pyramid(char, n) {
     for (var i = 1; i <= n; i++) {
         str = str + spaces.repeat(n - i) + char.repeat(2 * i - 1) + "\n";
     }
-    return "\n"+str.slice(0, -1);
+    return str.slice(0, -1);
 }
