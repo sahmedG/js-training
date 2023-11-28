@@ -19,5 +19,5 @@ function cutFirst(input) {
   }
   
   function keepFirstLast(input) {
-    return input.length > 2 ? input.slice(0, 2) + input.slice(-2) : input;
+    return input.length > 4 ? input.slice(0, 2) + input.slice(-2) : input;
   }
