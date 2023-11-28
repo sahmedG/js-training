@@ -16,7 +16,7 @@ function round(num) {
     const isPositive = num >= 0;
     const multiplier = isPositive ? 1 : -1;
   
-    while (num % 1 !== 0) {
+    while (customModulus(num,1) !== 0) {
       num += multiplier * 0.1;
     }
   
