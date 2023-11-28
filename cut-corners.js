@@ -1,17 +1,27 @@
 function round(num) {
-    const decimalPart = num - (num | 0);
-    return decimalPart >= 0.5 ? (num < 0 ? (num | 0) - 1 : (num | 0) + 1) : num | 0;
+    const absNum = Math.abs(num);
+    const tens = Math.pow(10, Math.floor(Math.log10(absNum)));
+    const rounded = Math.floor(absNum / tens) * tens;
+  
+    return num < 0 ? -rounded : rounded;
   }
   
   function ceil(num) {
-    return num >= 0 ? (num === (num | 0) ? num : (num | 0) + 1) : num | 0;
+    const absNum = Math.abs(num);
+    const tens = Math.pow(10, Math.floor(Math.log10(absNum)));
+    const ceiled = Math.ceil(absNum / tens) * tens;
+  
+    return num < 0 ? -ceiled : ceiled;
   }
   
   function floor(num) {
-    return num >= 0 ? num | 0 : (num === (num | 0) ? num : (num | 0) - 1);
+    const absNum = Math.abs(num);
+    const tens = Math.pow(10, Math.floor(Math.log10(absNum)));
+    const floored = Math.floor(absNum / tens) * tens;
+  
+    return num < 0 ? -floored : floored;
   }
   
   function trunc(num) {
-    return num >= 0 ? num | 0 : (num === (num | 0) ? num : (num | 0) - 1);
+    return Math.abs(num) === Infinity ? num : num >= 0 ? Math.floor(num) : Math.ceil(num);
   }
-  
