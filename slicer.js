@@ -7,6 +7,8 @@ function slice(input, start, end) {
         start = Math.max(0, start + inputLength);
       }
   
+      end = typeof end !== 'undefined' ? end : inputLength;
+  
       if (end < 0) {
         end = Math.max(0, end + inputLength);
       }
@@ -17,7 +19,7 @@ function slice(input, start, end) {
         sliced += input[i];
       }
   
-      return typeof input === 'string' ? sliced : sliced.split('');
+      return sliced;
     } else {
       throw new Error('Invalid input. The input must be an array or a string.');
     }
