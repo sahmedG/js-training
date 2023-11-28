@@ -1,15 +1,15 @@
 function reverse(input) {
    if (Array.isArray(input)) {
-        let res = [];
+        let result = [];
         for (let i = input.length - 1; i >= 0; i--) {
-            res.push(input[i]);
+            result.push(input[i]);
         }
-        return res;
+        return result;
     } else if (typeof input === "string") {
-        let res = "";
+        let result = "";
         for (let i = input.length - 1; i >= 0; i--) {
-            res += input[i];
+            result += input[i];
         }
-        return res;
+        return result;
     } 
 }
