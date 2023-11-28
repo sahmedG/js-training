@@ -1,6 +1,9 @@
 function repeat(str, num) {
-
+    let result = '';
+  
     for (let i = 0; i < num; i++) {
-        return result;
+      result += str;
     }
+  
+    return result;
   }
