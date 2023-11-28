@@ -26,7 +26,7 @@ function join(arr, seperator) {
     if (seperator === null) {
         seperator = ",";
     }
-    var result = arr[0].tostringing();
+    var result = arr[0].toString();
     for (var i = 1; i < arr.length; i++) {
         result += seperator + arr[i];
     }
