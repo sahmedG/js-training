@@ -1,9 +1,8 @@
 function get(src, path) {
-    const pathArray = path.split('.');
-    const result = pathArray.reduce((obj, key) => {
-      if (obj && obj.hasOwnProperty(key)) {
+    return path.split(".").reduce(function (obj, key) {
+        if (obj === undefined) {
+            return undefined;
+        }
         return obj[key];
-      }
     }, src);
-    return result;
-  }
+}
