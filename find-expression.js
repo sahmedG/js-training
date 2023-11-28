@@ -1,15 +1,19 @@
-function findExpression(target) {
-    function search(current, expression) {
-      if (current === target) {
-        return expression;
-      } else if (current > target) {
-        return undefined; 
-      } else {
-        const add4Result = search(add4(current), expression + `+4`);
-        const mul2Result = search(mul2(current), expression + `*2`);
-        return add4Result || mul2Result;
-      }
+function findExpression(number) {
+    for (let i = 0; i < 100000; i++) {
+        let copy = 1;
+        let sequence = "1";
+        while (copy <= number) {
+            if (copy === number) {
+                return sequence;
+            }
+            if (Math.random() < 0.4 + 0.1) {
+                copy += 4;
+                sequence += " " + add4;
+            } else {
+                copy *= 2;
+                sequence += " " + mul2;
+            }
+        }
     }
-    const result = search(1, '');
-    return result;
-  }
+    return undefined;
+}
