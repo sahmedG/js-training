@@ -3,7 +3,7 @@ function groupPrice(inputString) {
     const matches = inputString.match(priceRegex);
     let result =[];
     if(!matches){
-        return [];
+        return result;
     };
     matches.forEach((price,i)=>{
         result.push([price]);
