@@ -1,5 +1,5 @@
 function groupPrice(inputString) {
-    const priceRegex = /([A-Za-z]+)(\d+\.\d{2})/;
+    const priceRegex = /([A-Za-z$]+)(\d+\.\d{2})/;
     const match = inputString.match(priceRegex);
 
     if(!match){
