@@ -11,5 +11,5 @@ function groupPrice(inputString) {
         result[i].push(price.match(priceRegex)[1]);
     });
 
-    return pricebreak
+    return result
 }
