@@ -1,11 +1,11 @@
 function groupPrice(inputString) {
     const priceRegex = /([A-Za-z$]+)(\d+\.\d{2})/;
-    const match = inputString.match(priceRegex);
+    const matches = inputString.match(priceRegex);
     let result =[];
-    if(!match){
+    if(!matches){
         return [];
     };
-    match.forEach((price,i)=>{
+    matches.forEach((price,i)=>{
         result.push([price]);
         result[i].push(price.match(priceRegex)[0]);
         result[i].push(price.match(priceRegex)[1]);
