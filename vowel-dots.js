@@ -1,5 +1,5 @@
 function vowelDots(inputString) {
-    const vowels = /aeiouAEIOU/g;
+    var vowels = /aeiouAEIOU/g;
     const resstr = inputString.replace(vowels,match => match + '.');
     return resstr;
 }
