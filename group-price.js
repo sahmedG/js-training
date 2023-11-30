@@ -5,7 +5,7 @@ function groupPrice(inputString) {
     if(!match){
         return [];
     };
-    inputString.forEach((price,i)=>{
+    match.forEach((price,i)=>{
         result.push([price]);
         result[i].push(price.match(priceRegex)[0]);
         result[i].push(price.match(priceRegex)[1]);
