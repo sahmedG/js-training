@@ -1,15 +1,10 @@
-function groupPrice(inputString) {
-    const priceRegex = /([A-Za-z$]+)(\d+\.\d{2})/;
-    const matches = inputString.match(priceRegex);
-    let result =[];
-    if(!matches){
-        return result;
-    };
-    matches.forEach((price,i)=>{
-        result.push([price]);
-        result[i].push(price.match(priceRegex)[0]);
-        result[i].push(price.match(priceRegex)[1]);
+function groupPrice(str) {
+    let prices = str.match(/(([A-Z]{3})|\$)([0-9]+\.[0-9]+)/g);
+    let res = [];
+    if (prices === null) return res;
+    prices.forEach((price) => {
+        let [fullPrice, dollars, cents] = price.match(/[0-9]+/g);
+        res.push([fullPrice, dollars, cents]);
     });
-
-    return result
+    return res;
 }
