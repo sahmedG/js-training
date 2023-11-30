@@ -1,7 +1,7 @@
 const vowels = /aeiouAEIOU/gi;
 
 function vowelDots(inputString) {
-    const resstr = inputString.replace(vowels,function (v) {
+    return inputString.replace(vowels,function (v) {
     return v + '.';
 });
 }
