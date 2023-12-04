@@ -16,8 +16,9 @@ function citiesOnly(arr) {
 
   function trimTemp(arr) {
     return arr.map((obj)=>{
-        return obj.temperature.trim();
-    })
+        obj.temperature = obj.temperature.trim();
+        return obj;
+    });
   }
 
   function tempForecasts(arr) {
