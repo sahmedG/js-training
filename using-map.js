@@ -7,16 +7,16 @@ function citiesOnly(arr) {
   }
 
   function fahrenheitToCelsius(arr) {
-    const fToC = fahrenheit => `${Math.floor((parseInt(fahrenheit) - 32) * 5 / 9)}°C`;
-    return arr.map(temp => fToC(temp.replace(/\D/g, '')));
-  }
+    return arr.map(
+        (item) =>
+            Math.floor((Number(item.slice(0, -2)) - 32) * (5 / 9)).toString() +
+            "°C"
+    );
+}
 
   function trimTemp(arr) {
-    return arr.map((item) => {
-        item.temperature = item.temperature.replaceAll(" ", "");
-        return item;
-    });
-}
+    return arr.map(obj => ({ city: obj.city, temperature: obj.temperature.trim() }));
+  }
 
   function tempForecasts(arr) {
     return arr.map(obj => `${fahrenheitToCelsius([obj.temperature])[0]} in ${obj.city}, ${obj.state}`);
