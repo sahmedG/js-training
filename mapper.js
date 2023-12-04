@@ -1,4 +1,4 @@
-function customMap(arr, callback) {
+function map(arr, callback) {
     const result = [];
     for (let i = 0; i < arr.length; i++) {
       result.push(callback(arr[i], i, arr));
@@ -7,8 +7,10 @@ function customMap(arr, callback) {
   }
   
   function flatMap(arr, callback) {
-    return arr.reduce(
-        (acc, val, i, arr) => acc.concat(callback(val, i, arr)),
-        []
-    );
-}
+    const result = [];
+    for (let i = 0; i < arr.length; i++) {
+      const mappedValue = callback(arr[i], i, arr);
+      result.push(...mappedValue);
+    }
+    return result;
+  }
