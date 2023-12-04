@@ -12,8 +12,11 @@ function citiesOnly(arr) {
   }
 
   function trimTemp(arr) {
-    return arr.map(obj => ({ city: obj.city, temperature: obj.temperature.trim() }));
-  }
+    return arr.map((item) => {
+        item.temperature = item.temperature.replaceAll(" ", "");
+        return item;
+    });
+}
 
   function tempForecasts(arr) {
     return arr.map(obj => `${fahrenheitToCelsius([obj.temperature])[0]} in ${obj.city}, ${obj.state}`);
