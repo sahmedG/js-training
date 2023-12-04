@@ -14,7 +14,15 @@ function citiesOnly(arr) {
     );
 }
 
-  function trimTemp(arr) {
+function fahrenheitToCelsiusSpecial(arr) {
+    return arr.map(
+        (item) =>
+            Math.floor((Number(item.slice(0, -2)) - 32) * (5 / 9)).toString() +
+            "°Celsius"
+    );
+}
+
+function trimTemp(arr) {
     return arr.map((obj)=>{
         obj.temperature = obj.temperature.replaceAll(" ", "");;
         return obj;
@@ -22,5 +30,5 @@ function citiesOnly(arr) {
   }
 
   function tempForecasts(arr) {
-    return arr.map(obj => `${(fahrenheitToCelsius([obj.temperature])).replaceAll("°C","°Celsius")[0]} in ${obj.city}, ${obj.state}`);
+    return arr.map(obj => `${(fahrenheitToCelsius([obj.temperature]))[0]} in ${obj.city}, ${obj.state}`);
   }
