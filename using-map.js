@@ -30,5 +30,5 @@ function trimTemp(arr) {
   }
 
   function tempForecasts(arr) {
-    return arr.map(obj => `${fahrenheitToCelsiusSpecial([obj.temperature])[0]} in ${obj.city}, ${obj.state}`);
+    return arr.map(obj => `${fahrenheitToCelsiusSpecial([obj.temperature])[0]} in ${obj.city}, ${upperCasingStates([obj.state])}`);
   }
