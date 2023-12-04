@@ -16,7 +16,7 @@ function citiesOnly(arr) {
 
   function trimTemp(arr) {
     return arr.map((obj)=>{
-        obj.temperature = obj.temperature.trim();
+        obj.temperature = obj.temperature.replaceAll(" ", "");;
         return obj;
     });
   }
