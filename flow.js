@@ -1,5 +1,5 @@
 function flow(funcs){
     return function(...args) {
-        return arr.reduce((acc, fn) => fn(acc), args[0]);
+        return funcs.reduce((acc, fn) => fn(acc), args[0]);
     };
 }
