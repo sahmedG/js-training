@@ -1,7 +1,8 @@
 function dayOfTheYear(date) {
-    const startOfYear = new Date(date.getFullYear(), 0, 1);
-    const millisecondsInDay = 24 * 60 * 60 * 1000;
-    const daysDifference = Math.floor((date - startOfYear) / millisecondsInDay);
-  
-    return daysDifference++;
-  }
+  const clonedDate = new Date(date);
+  clonedDate.setMonth(0, 1);
+  const timeDifference = date - clonedDate;
+  const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+  return daysDifference+1;
+}
