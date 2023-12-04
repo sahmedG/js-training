@@ -1,16 +1,36 @@
-function matchCron(cronPattern, date) {
-    const cronParts = cronPattern.split(' ');
-    const [minute, hour, dayOfMonth, month, dayOfWeek] = cronParts;
-    const dateMinute = date.getMinutes();
-    const dateHour = date.getHours();
-    const dateDayOfMonth = date.getDate();
-    const dateMonth = date.getMonth() + 1;
-    const dateDayOfWeek = date.getDay();
-    const matchMinute = minute === '*' || Number(minute) === dateMinute;
-    const matchHour = hour === '*' || Number(hour) === dateHour;
-    const matchDayOfMonth = dayOfMonth === '*' || Number(dayOfMonth) === dateDayOfMonth;
-    const matchMonth = month === '*' || Number(month) === dateMonth;
-    const matchDayOfWeek = dayOfWeek === '*' || Number(dayOfWeek) === dateDayOfWeek + 1; 
-  
-    return matchMinute && matchHour && matchDayOfMonth && matchMonth && matchDayOfWeek;
+function matchCron(CronStr, date) {
+  let cron = {};
+  CronStr.split(" ").forEach((part, i) => {
+      if (part === "*") return;
+      switch (i) {
+          case 0:
+              cron.minute = part;
+              break;
+          case 1:
+              cron.hour = part;
+              break;
+          case 2:
+              cron.date = part;
+              break;
+          case 3:
+              cron.month = part;
+              break;
+          case 4:
+              cron.day = part;
+              break;
+      }
+  });
+  date = {
+      minute: date.getMinutes(),
+      hour: date.getHours(),
+      date: date.getDate(),
+      month: date.getMonth() + 1,
+      day: date.getDay(),
+  };
+  for (let key in cron) {
+      if (cron[key] !== date[key].toString()) {
+          return false;
+      }
   }
+  return true;
+}
