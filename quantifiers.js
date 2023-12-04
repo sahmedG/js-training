@@ -11,5 +11,5 @@ function some(array,func){
     return false;
 }
 function none(array,func){
-    return !some(array,func);
+    return every(array,func);
 }
