@@ -1,16 +1,23 @@
-function firstDayWeek(week, year) {
-    const januaryFirst = new Date(`${year}-01-01`);
-    const dayOfWeek = januaryFirst.getDay();
+function isAfter(date1, date2) {
+  return date1.getTime() > date2.getTime();
+}
 
-    const offset = dayOfWeek === 0 ? 1 : 8 - dayOfWeek;
-  
-    const firstDay = new Date(januaryFirst);
-    firstDay.setDate(januaryFirst.getDate() + offset + (week - 1) * 7);
+function isBefore(date1, date2) {
+  return date1.getTime() < date2.getTime();
+}
 
-    const dd = String(firstDay.getDate()).padStart(2, '0');
-    const mm = String(firstDay.getMonth() + 1).padStart(2, '0');
-    const yyyy = firstDay.getFullYear();
-  
-    return `${dd}-${mm}-${yyyy}`;
+function isFuture(date) {
+  if (!isValid(date)) {
+    return false;
   }
-  
+  const presentDate = new Date();
+  return isAfter(date, presentDate);
+}
+
+function isPast(date) {
+  if (!isValid(date)) {
+    return false;
+  }
+  const presentDate = new Date();
+  return isBefore(date, presentDate);
+}
