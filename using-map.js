@@ -22,5 +22,5 @@ function citiesOnly(arr) {
   }
 
   function tempForecasts(arr) {
-    return arr.map(obj => `${fahrenheitToCelsius([obj.temperature]).replaceAll("°C","°Celsius")[0]} in ${obj.city}, ${obj.state}`);
+    return arr.map(obj => `${(fahrenheitToCelsius([obj.temperature])).replaceAll("°C","°Celsius")[0]} in ${obj.city}, ${obj.state}`);
   }
