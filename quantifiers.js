@@ -10,6 +10,6 @@ function some(array,func){
     }
     return false;
 }
-function some(array,func){
+function none(array,func){
     return true;
 }
