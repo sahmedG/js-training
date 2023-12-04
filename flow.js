@@ -4,5 +4,4 @@ function flow(funcs){
             args = [arr[0](...args)];
         }
         return funcs.reduce((acc, fn) => fn(acc), args[0]);
-    };};
-}
+};};
