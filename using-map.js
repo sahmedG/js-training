@@ -15,7 +15,9 @@ function citiesOnly(arr) {
 }
 
   function trimTemp(arr) {
-    return arr.map(obj => ({ city: obj.city, temperature: obj.temperature.trim() }));
+    return arr.map((obj)=>{
+        return obj.temperature.trim();
+    })
   }
 
   function tempForecasts(arr) {
