@@ -1,31 +1,21 @@
-document.addEventListener('keydown', compose);
-export function compose(event) {
-    const notesContainer = document.getElementById('notes-container');
-    if (event.key === 'Backspace') {
-      const lastNote = notesContainer.lastChild;
-      if (lastNote) notesContainer.removeChild(lastNote);
-      return;
-    }
-
-    if (event.key === 'Escape') {
-      while (notesContainer.firstChild) {
-        notesContainer.removeChild(notesContainer.firstChild);
-      }
-      return;
-    }
-  
-    if (!/[a-z]/.test(event.key)) return;
-  
-    const note = document.createElement('div');
-    note.classList.add('note');
-    const keyCode = event.keyCode;
-    const red = (keyCode % 256) * 2;
-    const green = Math.floor(keyCode / 256) * 2;
-    const blue = (keyCode % 1024) * 2;
-    note.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
-    note.textContent = event.key;
-    notesContainer.appendChild(note);
-  }
-
-
-  
+export function compose(){
+    document.addEventListener("keydown", (event)=>{
+        let eventCode = event.keyCode
+        if(eventCode === 27){
+            document.querySelectorAll("div").forEach((item) => {
+                item.remove()
+            })
+        }else if(eventCode === 8){
+            let removeLastChar = document.querySelectorAll("div")
+            removeLastChar[removeLastChar.length-1].remove()
+        }else{
+            let eventKey = event.key
+            let block = document.createElement("div")
+            block.classList.add("note")
+            let color = "#"+99+eventCode+eventCode
+            block.style.background = color
+            document.body.appendChild(block)
+            block.innerHTML = eventKey
+        }
+    })
+}
