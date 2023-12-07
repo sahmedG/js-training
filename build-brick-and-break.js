@@ -1,4 +1,4 @@
-function build(arr) {
+function build(n) {
     let body = document.getElementsByTagName("body")[0];
     let bricks = 1;
     let interval = setInterval(() => {
@@ -7,22 +7,24 @@ function build(arr) {
         bricks % 3 === 2 ? (brick.dataset.foundation = true) : null;
         body.appendChild(brick);
         bricks++;
-        if (bricks > arr) {
+        if (bricks > n) {
             clearInterval(interval);
         }
     }, 100);
 }
 
 function repair(...ids) {
-    ids.forEach((ids) => {
-        let brick = getElementsById(id);
-        brick.getAttribute("foundation") ? (brick.dataset.repaired = "in progress") : (brick.dataset.repaired = true);
+    ids.forEach((id) => {
+        let brick = document.getElementById(id);
+        brick.getAttribute("foundation")
+            ? (brick.dataset.repaired = "in progress")
+            : (brick.dataset.repaired = true);
     });
 }
 
-function destroy(){
+function destroy() {
     let bricks = document.getElementsByTagName("div");
     bricks[bricks.length - 1].remove();
 }
 
-export {build,repair,destroy};
+export { build, repair, destroy };
