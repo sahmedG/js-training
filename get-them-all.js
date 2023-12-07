@@ -14,16 +14,16 @@ function getClassical() {
 
 function getActive() {
     return [
-        document.getElementById("BonannoPisano"),
         document.querySelectorAll("a.classical.active"),
+        document.querySelectorAll("a.classical:not(.active)"),
     ];
 }
 
 function getBonannoPisano() {
     return [
-        document.querySelectorAll("body a"),
-        document.querySelectorAll("body span"),
+        document.getElementById("BonannoPisano"),
+        document.querySelectorAll("a.classical.active"),
     ];
 }
 
-export {getArchitects,getClassical,getActive,getBonannoPisano};
+export { getArchitects, getClassical, getActive, getBonannoPisano };
