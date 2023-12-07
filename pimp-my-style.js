@@ -1,6 +1,7 @@
 import { styles } from "./pimp-my-style.data.js";
-var couter = 0;
-export function pimp(){
+var counter = 0;
+
+export function pimp() {
     var button = document.querySelector("button.button");
     if (!button.classList.contains("unpimp")) {
         button.classList.add(styles[counter]);
