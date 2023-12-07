@@ -1,3 +1,4 @@
+document.addEventListener('keydown', compose);
 export function compose(event) {
     const notesContainer = document.getElementById('notes-container');
     if (event.key === 'Backspace') {
@@ -26,5 +27,5 @@ export function compose(event) {
     notesContainer.appendChild(note);
   }
 
-  document.addEventListener('keydown', compose);
+
   
