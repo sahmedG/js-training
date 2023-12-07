@@ -1,5 +1,4 @@
-import { gossips } from './data.js';
-
+import { gossips } from "./gossip-grid.data.js";
 const rangeTypes = ['width', 'fontSize', 'background'];
 
 function createGossipCard(content) {
