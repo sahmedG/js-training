@@ -1,4 +1,4 @@
-import {styles} from './data.js'
+import { styles } from "./pimp-my-style.data.js";
 var couter = 0;
 export function pimp(){
     var button = document.querySelector("button.button");
