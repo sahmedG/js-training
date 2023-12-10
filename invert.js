@@ -1,4 +1,7 @@
-
-function invert(obj){
-	return 	JSON.stringify(_.invert(obj));	
-}
+function invert(obj){ 
+  var retobj = {}; 
+  for(var key in obj){ 
+    retobj[obj[key]] = key; 
+  } 
+  return retobj; 
+} 
