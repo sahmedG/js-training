@@ -1,21 +1,20 @@
-function pick(obj,keys){
-    const included = {}
+function pick(obj, keys) {
+    const obj2 = {}
     let keysObj = Object.keys(obj)
     keysObj.forEach(key => {
         if (key == keys) {
-            included[key] = obj[key]
+            obj2[key] = obj[key]
         }
     })
-    return included
+    return obj2
 }
-
-function omit(obj,keys){
-    const excluded = {}
+function omit(obj, keys) {
+    const obj2 = {}
     let keysObj = Object.keys(obj)
     keysObj.forEach(key => {
         if (key != keys) {
-            excluded[key] = obj[key]
+            obj2[key] = obj[key]
         }
     })
-    return excluded
+    return obj2
 }
