@@ -1,4 +1,4 @@
-function fusoin(object1, object2) {
+function fusion(object1, object2) {
     var combined = {};
     for (var key in object1) {
         if (!object1.hasOwnProperty(key)) continue;
