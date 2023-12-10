@@ -1,20 +1,34 @@
 function pick(obj, keys) {
-    const obj2 = {}
-    let keysObj = Object.keys(obj)
-    keysObj.forEach(key => {
-        if (key == keys) {
-            obj2[key] = obj[key]
+    const picked = {};
+    for (let key in obj) {
+        let regexp = new RegExp(`^${key}$`);
+        if (typeof keys === "string") {
+            if (keys.match(regexp)) {
+                picked[key] = obj[key];
+            }
+        } else {
+            if (keys.includes(key)) {
+                picked[key] = obj[key];
+            }
         }
-    })
-    return obj2
+    }
+    return picked;
 }
+
 function omit(obj, keys) {
-    const obj2 = {}
-    let keysObj = Object.keys(obj)
-    keysObj.forEach(key => {
-        if (key != keys) {
-            obj2[key] = obj[key]
+    const omitted = {};
+    for (let key in obj) {
+        if (obj.hasOwnProperty(key) === false) continue;
+        let regexp = new RegExp(`^${key}$`);
+        if (typeof keys === "string") {
+            if (!keys.match(regexp)) {
+                omitted[key] = obj[key];
+            }
+        } else {
+            if (!keys.includes(key)) {
+                omitted[key] = obj[key];
+            }
         }
-    })
-    return obj2
+    }
+    return omitted;
 }
