@@ -1,4 +1,4 @@
-function pick(obj){
+function pick(obj,keys){
     const included = {}
     let keysObj = Object.keys(obj)
     keysObj.forEach(key => {
@@ -9,7 +9,7 @@ function pick(obj){
     return included
 }
 
-function omit(obj){
+function omit(obj,keys){
     const excluded = {}
     let keysObj = Object.keys(obj)
     keysObj.forEach(key => {
