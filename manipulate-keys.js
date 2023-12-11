@@ -18,9 +18,17 @@ function filterKeys(obj, callback) {
   }
   
   function reduceKeys(obj, callback, initialValue) {
-    let accumulator = initialValue === undefined ? {} : initialValue;
-    for (const key in obj) {
-      accumulator = callback(accumulator, key);
+    let undef = false;
+    if (initialValue === undefined) {
+        initialValue = "";
+        undef = true;
     }
-    return accumulator;
-  }
+    let res = Object.keys(obj).reduce((acc, curr) => {
+        return callback(acc, curr, initialValue);
+    }, initialValue);
+    if (typeof res !== "number") {
+        if (res.slice(0, 2) === ", ") res = res.slice(2);
+        if (undef && res[0] === ":") res = res.slice(1);
+    }
+    return res;
+}
