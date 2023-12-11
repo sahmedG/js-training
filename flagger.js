@@ -1,26 +1,33 @@
-function flags(commands) {
-    const result = {
-      alias: { h: 'help' },
-      description: '',
-    };
+function flags(obj) {
+    var res = { alias: { h: 'help' } };
   
-    if (!commands.help) {
-      result.description = Object.entries(commands)
-        .filter(([key]) => key !== 'help')
-        .map(([key, value]) => `-${key[0]}, --${key}: ${value}`)
-        .join('\n');
+    if (Object.keys(obj).length === 0) return res;
+  
+    let help = obj.help;
+    delete obj.help;
+  
+    for (let key in obj) {
+      res.alias[key[0]] = key;
+    }
+  
+    if (help) {
+      res.description = help.map((key) => {
+        let desc = obj[key];
+        return `-${key[0]}, --${key}: ${desc}`;
+      });
     } else {
-      const helpFlags = Array.isArray(commands.help) ? commands.help : [];
-  
-      helpFlags.forEach((flag) => {
-        const alias = flag[0];
-        const command = flag.slice(1);
-        const description = commands[command] || '';
-  
-        result.alias[alias] = command;
-        result.description += `-${alias}, --${command}: ${description}\n`;
+      res.description = Object.keys(obj).map((key) => {
+        let desc = obj[key];
+        return `-${key[0]}, --${key}: ${desc}`;
       });
     }
   
-    return result;
+    res.description =
+      res.description && res.description.length > 0
+        ? Array.isArray(res.description)
+          ? res.description.join('\n')
+          : res.description
+        : '';
+  
+    return res;
   }
