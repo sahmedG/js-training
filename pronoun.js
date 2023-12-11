@@ -9,8 +9,11 @@ function pronoun(str) {
         acc[pronoun] = {
           word: matches.map((match) => {
             const index = str.indexOf(match) + match.length + 1;
-            const nextWord = str.slice(index, str.indexOf(' ', index) !== -1 ? str.indexOf(' ', index) : undefined);
-            return nextWord.replace(/[\n\r]+/g, ''); // Remove newline characters
+            const nextWord = str
+              .slice(index, str.indexOf(' ', index) !== -1 ? str.indexOf(' ', index) : undefined)
+              .replace(/[\n\r]+/g, '')
+              .split(',')[0];
+            return nextWord;
           }),
           count: matches.length,
         };
