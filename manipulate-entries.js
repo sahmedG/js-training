@@ -1,76 +1,60 @@
-function filterEntries(cart, callback) {
-    const filteredEntries = {};
-    for (const [key, value] of Object.entries(cart)) {
-      if (callback([key, value])) {
-        filteredEntries[key] = value;
-      }
+function filterEntries(obj, filter) {
+    let res = {};
+    for (let key in obj) {
+        if (filter([key, obj[key]])) {
+            res[key] = obj[key];
+        }
     }
-    return filteredEntries;
-  }
-  
-  function mapEntries(cart, callback) {
-    const mappedEntries = {};
-    for (const [key, value] of Object.entries(cart)) {
-      const [newKey, newValue] = callback([key, value]);
-      mappedEntries[newKey] = newValue;
+    return res;
+}
+
+function mapEntries(entries, mapper) {
+    let temp = {};
+    for (let key in entries) {
+        temp[key] = mapper([key, entries[key]]);
     }
-    return mappedEntries;
-  }
-  
-  function reduceEntries(cart, callback, initialValue) {
-    let accumulator = initialValue === undefined ? {} : initialValue;
-    for (const [key, value] of Object.entries(cart)) {
-      accumulator = callback(accumulator, [key, value]);
+    let res = {};
+    for (let key in temp) {
+        res[temp[key][0]] = temp[key][1];
     }
-    return accumulator;
-  }
-  
-  function totalCalories(cart) {
-    const totalCalories = reduceEntries(
-      cart,
-      (acc, [key, value]) => acc + calculateCalories(key, value),
-      0
+    return res;
+}
+
+function reduceEntries(entries, reducer, initialValue) {
+    let acc = initialValue;
+    for (let key in entries) {
+        acc = reducer(acc, [key, entries[key]]);
+    }
+    return acc;
+}
+
+function lowCarbs(entries) {
+    return filterEntries(entries, (entry) => {let value = (nutritionDB[entry[0]]["carbs"] / 100) * entry[1];return parseInt(value) <= 50;});
+}
+
+function totalCalories(entries) {
+    return Number(
+        reduceEntries(
+            entries,
+            (acc, curr) => {
+                let value = (nutritionDB[curr[0]]["calories"] / 100) * curr[1];
+                return acc + value;
+            },
+            0
+        ).toFixed(1)
     );
-    return totalCalories.toFixed(1);
-  }
-  
-  function lowCarbs(cart) {
-    return filterEntries(cart, ([_, value]) => value < 50);
-  }
-  
-  function cartTotal(cart) {
-    return mapEntries(cart, ([key, value]) => {
-      return {
-        calories: calculateCalories(key, value),
-        protein: calculateProtein(value),
-        carbs: value,
-        sugar: calculateSugar(value),
-        fiber: calculateFiber(value),
-        fat: calculateFat(value),
-      };
-    });
-  }
-  function calculateCalories(item, grams) {
-    const caloriesPerGram = {
-      orange: 0.49,
-      oil: 0.48,
-      sugar: 3.87,
-    };
-    return grams * caloriesPerGram[item];
-  }
-  
-  function calculateProtein(grams) {
-    return grams * 0.009;
-  }
-  
-  function calculateSugar(grams) {
-    return grams;
-  }
-  
-  function calculateFiber(grams) {
-    return grams * 0.01;
-  }
-  
-  function calculateFat(grams) {
-    return grams * 0.033;
-  }
+}
+
+function cartTotal(entries) {
+    let res = {};
+    for (let key in entries) {
+        res[key] = {};
+        for (let dbKey in nutritionDB[key]) {
+            res[key][dbKey] =
+                Math.round(
+                    (entries[key] / 100) * nutritionDB[key][dbKey] * 1000
+                ) / 1000;
+        }
+    }
+    return res;
+}
