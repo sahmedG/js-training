@@ -1,26 +1,25 @@
 function replica(target, ...sources) {
-    if (target === null || typeof target !== 'object') {
-      throw new Error('Target must be an object');
-    }
-  
-    for (const source of sources) {
-      if (source === null || typeof source !== 'object') {
-        throw new Error('Source must be an object');
-      }
-  
-      for (const key in source) {
-        if (source.hasOwnProperty(key)) {
-          const sourceValue = source[key];
-          const targetValue = target[key];
-  
-          if (sourceValue !== null && typeof sourceValue === 'object') {
-            target[key] = replica(targetValue, sourceValue);
-          } else {
-            target[key] = sourceValue;
-          }
-        }
-      }
-    }
-  
+    sources.forEach((source) => {
+        Object.keys(source).forEach((key) => {
+            if (is.obj(source[key])) {
+                if (!target.hasOwnProperty(key) || !is.obj(target[key])) {
+                    target[key] = {};
+                }
+                replica(target[key], source[key]);
+            } else {
+                target[key] = source[key];
+            }
+        });
+    });
     return target;
-  }
+}
+
+var is = {};
+is.arr = (n) => Array.isArray(n);
+is.obj = (n) =>
+    typeof n === 'object' &&
+    !is.fun(n) &&
+    !is.arr(n) &&
+    n !== null &&
+    !(n instanceof RegExp);
+is.fun = (n) => typeof n === 'function';
