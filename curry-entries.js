@@ -1,43 +1,65 @@
-const defaultCurry = (obj1) => (obj2) => ({ ...obj1, ...obj2 });
+function defaultCurry(obj1) {
+    return function (obj2) {
+        let res = {};
+        for (let key in obj1) {
+            res[key] = obj1[key];
+        }
+        for (let key in obj2) {
+            res[key] = obj2[key];
+        }
+        return res;
+    };
+}
 
-const mapCurry = (fn) => (obj) => {
-  const result = {};
-  for (const [key, value] of Object.entries(obj)) {
-    const [newKey, newValue] = fn([key, value]);
-    result[newKey] = newValue;
-  }
-  return result;
-};
+function mapCurry(func) {
+    return function (obj2) {
+        let res = {};
+        for (let key in obj2) {
+            res[func([key, obj2[key]])[0]] = func([key, obj2[key]])[1];
+        }
+        return res;
+    };
+}
 
-const reduceCurry = (fn) => (obj, initialValue) => {
-  let accumulator = initialValue === undefined ? {} : initialValue;
-  for (const [key, value] of Object.entries(obj)) {
-    accumulator = fn(accumulator, [key, value]);
-  }
-  return accumulator;
-};
+function reduceCurry(obj1) {
+    return function (obj2, obj3) {
+        let res = obj3;
+        for (let key in obj2) {
+            res = obj1(res, [key, obj2[key]]);
+        }
+        return res;
+    };
+}
 
-const filterCurry = (fn) => (obj) => {
-  const result = {};
-  for (const [key, value] of Object.entries(obj)) {
-    if (fn([key, value])) {
-      result[key] = value;
+function filterCurry(obj1) {
+    return function (obj2) {
+        let res = {};
+        for (let key in obj2) {
+            if (obj1([key, obj2[key]])) {
+                res[key] = obj2[key];
+            }
+        }
+        return res;
+    };
+}
+
+function reduceScore(obj1, obj2) {
+    return reduceCurry((acc, [, v]) =>
+        v.isForceUser ? acc + v.pilotingScore + v.shootingScore : acc
+    )(obj1, obj2);
+}
+
+function filterForce(obj) {
+    return filterCurry(([, v]) => v.isForceUser && v.shootingScore >= 80)(obj);
+}
+
+function mapAverage(obj) {
+    let avgScores = mapCurry(([k, v]) => [
+        k,
+        (v.pilotingScore + v.shootingScore) / 2,
+    ])(obj);
+    for (let key in avgScores) {
+        obj[key].averageScore = avgScores[key];
     }
-  }
-  return result;
-};
-
-const calculateAverage = (arr) => arr.reduce((sum, value) => sum + value, 0) / arr.length;
-
-const reduceScore = (personnel, additionalParam = 0) => {
-  const forceUsers = filterCurry(([_, person]) => person.isForceUser)(personnel);
-  return reduceCurry((acc, [_, person]) => acc + person.shootingScore + additionalParam)(
-    forceUsers
-  );
-};
-
-const filterForce = (personnel) =>
-  filterCurry(([_, person]) => person.isForceUser && person.shootingScore >= 80)(personnel);
-
-const mapAverage = (personnel) =>
-  mapCurry(([_, person]) => [_, { ...person, averageScore: calculateAverage(Object.values(person))}])(personnel);
+    return obj;
+}
