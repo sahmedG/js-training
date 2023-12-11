@@ -10,7 +10,7 @@ function pronoun(str) {
           word: matches.map((match) => {
             const index = str.indexOf(match) + match.length + 1;
             const nextWord = str.slice(index, str.indexOf(' ', index) !== -1 ? str.indexOf(' ', index) : undefined);
-            return nextWord
+            return nextWord.replace(/[\n\r]+/g, ''); // Remove newline characters
           }),
           count: matches.length,
         };
