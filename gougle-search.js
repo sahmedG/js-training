@@ -1,13 +1,4 @@
-function getJSON(url) {
-    return new Promise((resolve) => {
-      const responseTime = Math.random() * 100;
-      setTimeout(() => {
-        resolve(`Response from ${url}`);
-      }, responseTime);
-    });
-  }
-  
-  function queryServers(serverName, q) {
+function queryServers(serverName, q) {
     const url = `/${serverName}?q=${encodeURIComponent(q)}`;
     const backupUrl = `/${serverName}_backup?q=${encodeURIComponent(q)}`;
   
