@@ -6,7 +6,7 @@ function retry(count, callback) {
           return result;
         } catch (error) {
           if (i === count) {
-            throw new Error(`Exceeded maximum retry count (${count}). Last error: ${error.message}`);
+            throw new Error(`${error.message}`);
           }
         }
       }
