@@ -1,4 +1,4 @@
-function queryServers(serverName, q) {
+async function queryServers(serverName, q) {
     const url = `/${serverName}?q=${encodeURIComponent(q)}`;
     const backupUrl = `/${serverName}_backup?q=${encodeURIComponent(q)}`;
   
