@@ -18,7 +18,7 @@ function retry(count, callback) {
       return Promise.race([
         callback(...args),
         new Promise((_, reject) =>
-          setTimeout(() => reject(new Error('Timeout')), delay)
+          setTimeout(() => reject(new Error('timeout')), delay)
         ),
       ]);
     };
