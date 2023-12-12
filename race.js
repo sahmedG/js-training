@@ -1,4 +1,4 @@
-function race(promises) {
+async function race(promises) {
     return new Promise((resolve, reject) => {
       for (const promise of promises) {
         Promise.resolve(promise)
@@ -12,7 +12,7 @@ function race(promises) {
     });
   }
   
-  function some(promisesOrValues, count) {
+  async function some(promisesOrValues, count) {
     if (count === 0 || promisesOrValues.length === 0) {
       return Promise.resolve(undefined);
     }
