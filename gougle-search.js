@@ -6,21 +6,16 @@ function queryServers(serverName, q) {
   }
   
   async function gougleSearch(q) {
-    try {
-      const webPromise = queryServers('web', q);
-      const imagePromise = queryServers('image', q);
-      const videoPromise = queryServers('video', q);
-  
-      const results = await Promise.allSettled([webPromise, imagePromise, videoPromise]);
-      const validResults = results.filter((result) => result.status === 'fulfilled');
-  
-      if (validResults.length === 3) {
-        const [web, image, video] = validResults.map((result) => result.value);
-        return { web, image, video };
-      } else {
-        throw new Error('timeout');
-      }
-    } catch (error) {
-      return Promise.reject(error);
+    var timeout = new Promise((resolve) =>
+        setTimeout(resolve, 80, Error('timeout'))
+    );
+    var web = queryServers('web', q),
+        image = queryServers('image', q),
+        video = queryServers('video', q);
+
+    const res = await Promise.race([timeout, Promise.all([web, image, video])]);
+    if (res instanceof Error) {
+        throw res;
     }
-  }
+    return { image: res[1], video: res[2], web: res[0] };
+}
