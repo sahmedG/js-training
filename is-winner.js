@@ -1,31 +1,28 @@
-  function isWinner(countryName) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const country = await db.getWinner(countryName);
-  
+async function isWinner(country) {
+    try {
+        country = await db.getWinner(country);
+        if (country === Error('Country Not Found')) {
+            return `${country.name} never was a winner`;
+        }
         if (country.continent !== 'Europe') {
-          resolve(`${country.name} is not what we are looking for because of the continent`);
-          return;
+            return `${country.name} is not what we are looking for because of the continent`;
         }
-  
-        const results = await db.getResults(country.id);
-  
-        if (results.length === 0) {
-          resolve(`${country.name} never was a winner`);
-          return;
+        let results = await db.getResults(country.id);
+        if (results === Error('Results Not Found')) {
+            return `${country.name} never was a winner`;
         }
-  
         if (results.length < 3) {
-          resolve(`${country.name} is not what we are looking for because of the number of times it was champion`);
-          return;
+            return `${country.name} is not what we are looking for because of the number of times it was champion`;
         }
-  
-        const formattedResults = results.map((result) => `${result.year} winning by ${result.score}`).join(', ');
-  
-        resolve(`${country.name} won the FIFA World Cup in ${formattedResults}`);
-      } catch (error) {
-        reject(error.message);
-      }
-    });
-  }
-  
+        return (
+            `${country.name} won the FIFA World Cup in ` +
+            results.map((result) => result.year).join(', ') +
+            ' winning by ' +
+            results.map((result) => result.score).join(', ')
+        );
+    } catch (e) {
+        if (e.message === 'Country Not Found') {
+            return `${country} never was a winner`;
+        }
+    }
+}
