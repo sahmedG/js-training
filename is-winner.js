@@ -1,20 +1,3 @@
-const db = (() => {
-    // ... (provided code)
-  
-    return {
-      getWinner: async (countryName) => {
-        const match = countries.find((country) => country.name === countryName);
-        if (!match) throw Error('Country Not Found');
-        return match;
-      },
-      getResults: async (countryId) => {
-        const match = results.filter((result) => result.countryId === countryId);
-        if (!match.length) throw Error('Results Not Found');
-        return match;
-      },
-    };
-  })();
-  
   function isWinner(countryName) {
     return new Promise(async (resolve, reject) => {
       try {
