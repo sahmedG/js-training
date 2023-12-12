@@ -15,31 +15,27 @@ function throttle(func, wait) {
     };
   }
   
-  function opThrottle(func, wait, options = {}) {
-    let canCall = true;
-    let lastCallTime = 0;
-  
-    return function (...args) {
-      const context = this;
-      const currentTime = Date.now();
-  
-      if (options.leading && canCall) {
-        func.apply(context, args);
-        canCall = false;
-        lastCallTime = currentTime;
-      }
-  
-      if (!canCall) {
-        clearTimeout(canCall);
-  
-        setTimeout(() => {
-          if (options.trailing && currentTime - lastCallTime >= wait) {
-            func.apply(context, args);
-            lastCallTime = currentTime;
-          }
-          canCall = true;
-        }, wait);
-      }
+  function opThrottle(fn, delay, { leading = false, trailing = true } = {}) {
+    let last = 0;
+    let timer = null;
+    return function () {
+        const now = +new Date();
+        if (!last && leading === false) {
+            last = now;
+        }
+        if (now - last > delay) {
+            if (timer) {
+                clearTimeout(timer);
+                timer = null;
+            }
+            fn.apply(this, arguments);
+            last = now;
+        } else if (!timer && trailing !== false) {
+            timer = setTimeout(() => {
+                fn.apply(this, arguments);
+                last = +new Date();
+                timer = null;
+            }, delay);
+        }
     };
-  }
-  
+}
