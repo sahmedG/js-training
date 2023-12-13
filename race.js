@@ -14,7 +14,7 @@ async function race(promises) {
   
   async function some(promisesOrValues, count) {
     if (count === 0 || promisesOrValues.length === 0) {
-      return Promise.resolve(undefined);
+      return Promise.resolve([]);
     }
   
     return new Promise((resolve) => {
