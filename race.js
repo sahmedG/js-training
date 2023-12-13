@@ -14,7 +14,7 @@ async function race(promises) {
   
   async function some(promisesOrValues, count) {
     if (count === 0 || promisesOrValues.length === 0) {
-      return Promise.resolve([]);
+      return Promise.resolve(Array(count).fill(undefined));
     }
   
     return new Promise((resolve) => {
@@ -31,6 +31,10 @@ async function race(promises) {
         Promise.resolve(promiseOrValue)
           .then((result) => {
             results[index] = result;
+            resolvedCount++;
+            resolveIfEnoughResults();
+          })
+          .catch(() => {
             resolvedCount++;
             resolveIfEnoughResults();
           });
