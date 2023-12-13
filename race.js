@@ -18,7 +18,7 @@ async function race(promises) {
     }
   
     return new Promise((resolve) => {
-      const results = [];
+      const results = new Array(promisesOrValues.length);
       let resolvedCount = 0;
   
       function resolveIfEnoughResults() {
@@ -27,13 +27,13 @@ async function race(promises) {
         }
       }
   
-      for (const promiseOrValue of promisesOrValues) {
+      promisesOrValues.forEach((promiseOrValue, index) => {
         Promise.resolve(promiseOrValue)
           .then((result) => {
-            results.push(result);
+            results[index] = result;
             resolvedCount++;
             resolveIfEnoughResults();
           });
-      }
+      });
     });
   }
