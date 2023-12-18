@@ -19,15 +19,12 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (guestName === 'mario_0') {
-    res.writeHead(500, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ status: 500, body: { error: 'server failed' }, contentType: 'application/json' }));
     return;
   } else if (guestNumber !== 0 && expBody) {
-    res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ status: 200, body: { message: expBody }, contentType: 'application/json' }));
     return;
   } else  {
-    res.writeHead(404, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ status: 404, body: { error: 'guest not found' }, contentType: 'application/json' }));
     return;
   }
