@@ -28,4 +28,4 @@ const words = fileContent.split(' ');
 
 const reversedWords = words.map(reverseVeryDisco);
 
-console.log(reversedWords.join(' '));
+console.log(reversedWords.join(''));
