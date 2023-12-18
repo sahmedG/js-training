@@ -8,17 +8,12 @@ const discofy = (word) => {
   };
   
   const veryDisco = (input) => {
-    const words = input.split(' ');
-    const discoWords = words.map(discofy);
-  
-    const result = discoWords.join(' ');
+    const result = discofy(input);
     console.log(result);
   };
   
-  // Get the first command line argument after the program name
-  const input = process.argv.slice(2).join(' ');
+  const input = process.argv[2];
   
-  // Check if an argument is provided
   if (input) {
     veryDisco(input);
   } else {
