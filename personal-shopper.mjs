@@ -12,7 +12,7 @@ async function readShoppingList() {
     const data = await fs.readFile(shoppingListFile, "utf-8");
     return JSON.parse(data);
   } catch (error) {
-    return [];
+    return {};
   }
 }
 
@@ -21,7 +21,7 @@ async function writeShoppingList(list) {
 }
 
 async function createShoppingList() {
-  await writeShoppingList({});
+  await writeShoppingList([]);
   console.log(`Shopping list created in ${shoppingListFile}.`);
 }
 
@@ -40,27 +40,29 @@ async function addToList(elem, count = 1) {
   
 }
 
-async function removeFromList(elem, count = 1) {
-  const list = await readShoppingList();
-  const existingItem = list.find((item) => item.element === elem);
-
-  if (!existingItem) {
-    console.log(`Element ${elem} not found in the shopping list.`);
-    return;
+async function removeFromList(elem, count = 0) {
+    const list = await readShoppingList();
+    const existingItem = list.find((item) => item.element === elem);
+  
+    if (!existingItem) {
+      console.log(`Element ${elem} not found in the shopping list.`);
+      return;
+    }
+  
+    existingItem.count = Math.max(existingItem.count - count, 0);
+  
+    if (existingItem.count === 0) {
+      const index = list.indexOf(existingItem);
+      list.splice(index, 1);
+      console.log(`Removed all ${elem} from the shopping list.`);
+    } else {
+      console.log(`Subtracted ${count} from ${elem} in the shopping list.`);
+    }
+  
+    await writeShoppingList(list);
   }
-
-  existingItem.count -= count;
-
-  if (existingItem.count <= 0) {
-    const index = list.indexOf(existingItem);
-    list.splice(index, 1);
-    console.log(`Removed ${elem} from the shopping list.`);
-  } else {
-    console.log(`Subtracted ${count} from ${elem} in the shopping list.`);
-  }
-
-  await writeShoppingList(list);
-}
+  
+  
 
 async function listShoppingList() {
   const list = await readShoppingList();
