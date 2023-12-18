@@ -26,17 +26,24 @@ async function createShoppingList() {
 }
 
 async function addToList(elem, count = 1) {
-  const list = await readShoppingList();
-
-  if (!list[elem]) {
-    list[elem] = count;
-  } else {
-    list[elem] += count;
+    const list = await readShoppingList();
+  
+    if (!list[elem]) {
+      list[elem] = count;
+    } else {
+      list[elem] += count;
+    }
+  
+    // If the count becomes 0, remove the element
+    if (list[elem] <= 0) {
+      delete list[elem];
+      console.log(`Removed all ${elem} from the shopping list.`);
+    } else {
+      console.log(`Added ${count} ${elem}(s) to the shopping list.`);
+    }
+  
+    await writeShoppingList(list);
   }
-
-  await writeShoppingList(list);
-  console.log(`Added ${count} ${elem}(s) to the shopping list.`);
-}
 
 async function removeFromList(elem, count = 1) {
   const list = await readShoppingList();
