@@ -50,7 +50,7 @@ const server = http.createServer(async (req, res) => {
   // Extract guest name from the request URL
   const guestName = req.url.slice(1); // Remove leading '/'
   const filePath = `${guestName}.json`;
-
+  const expBody = urlParts.query.expBody;
   try {
     // Try to read the guest JSON file
     const data = await fs.readFile(filePath, 'utf-8');
@@ -63,7 +63,7 @@ const server = http.createServer(async (req, res) => {
     if (error.code === 'ENOENT') {
       // Guest not found
       res.writeHead(404, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ error: 'guest not found' }));
+      res.end(JSON.stringify({ message: expBody }));
     } else {
       // Server failed for some reason
       res.writeHead(500, { 'Content-Type': 'application/json' });
