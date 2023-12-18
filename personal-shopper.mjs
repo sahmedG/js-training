@@ -8,20 +8,27 @@ if (!shoppingListFile) {
 }
 
 async function readShoppingList() {
-  try {
-    const data = await fs.readFile(shoppingListFile, "utf-8");
-    return JSON.parse(data);
-  } catch (error) {
-    return [];
+    try {
+      const data = await fs.readFile(shoppingListFile, "utf-8");
+      const parsedData = JSON.parse(data);
+  
+      // If the parsed data is an array with a single element, return that element
+      if (Array.isArray(parsedData) && parsedData.length === 1) {
+        return parsedData[0];
+      }
+  
+      return parsedData;
+    } catch (error) {
+      return {};
+    }
   }
-}
 
 async function writeShoppingList(list) {
   await fs.writeFile(shoppingListFile, JSON.stringify(list, null, 2), "utf-8");
 }
 
 async function createShoppingList() {
-  await writeShoppingList({});
+  await writeShoppingList([]);
   console.log(`Shopping list created in ${shoppingListFile}.`);
 }
 
