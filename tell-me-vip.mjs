@@ -1,9 +1,9 @@
 // tell-me-vip.mjs
 
-import { readdirSync, readFileSync, writeFileSync, mkdirSync } from 'fs';
-import { resolve, dirname } from 'path';
+import { readdirSync, readFileSync, writeFileSync } from 'fs';
+import { resolve } from 'path';
 
-const directoryPath = process.argv[2] || '.';
+const directoryPath = process.argv[2] || '.'; 
 
 const resolvedPath = resolve(directoryPath);
 
@@ -17,7 +17,6 @@ try {
 
 const jsonFiles = entries.filter(entry => entry.endsWith('.json'));
 
-// Filter guests who answered 'YES'
 const vipGuests = jsonFiles
   .map(file => {
     const [firstname, lastname] = file.replace('.json', '').replace(/_/g, ' ').split(' ');
@@ -38,25 +37,11 @@ const vipGuests = jsonFiles
   })
   .filter(guest => guest !== null);
 
-// Sort the names alphabetically
 const sortedVipGuests = vipGuests.sort();
 
-// Generate formatted names with indices
 const formattedVipGuests = sortedVipGuests.map((name, index) => `${index + 1}. ${name}`);
 
-// Save the names to vip.txt
 const vipFilePath = resolve(resolvedPath, 'vip.txt');
-const vipFileDirectory = dirname(vipFilePath);
-
-// Ensure the directory exists
-try {
-  mkdirSync(vipFileDirectory, { recursive: true });
-} catch (error) {
-  console.error(`Error creating directory "${vipFileDirectory}": ${error.message}`);
-  process.exit(1);
-}
-
-// Save the names to vip.txt
 try {
   writeFileSync(vipFilePath, formattedVipGuests.join('\n'), 'utf8');
   console.log(`VIP list saved to ${vipFilePath}`);
