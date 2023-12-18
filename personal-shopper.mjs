@@ -45,9 +45,11 @@ async function addToList(elem, count = 1) {
     await writeShoppingList(list);
   }
 
-  async function removeFromList(elem, count = 1) {
+  async function removeFromList(elem, count) {
     const list = await readShoppingList();
-  
+    if (count == NaN) {
+        delete list[elem];
+    }
     if (!list[elem] && count < 0) {
       // If the element doesn't exist and count is negative, create it with the absolute value of the count
       list[elem] = Math.abs(count);
@@ -55,7 +57,6 @@ async function addToList(elem, count = 1) {
     } else if (list[elem]) {
       // Update the count and remove the element if it becomes 0
       list[elem] = Math.max(list[elem] - count, 0);
-  
       if (list[elem] === 0) {
         delete list[elem];
         console.log(`Removed all ${elem} from the shopping list.`);
@@ -98,7 +99,7 @@ async function handleCommand() {
       break;
     case "rm":
       const elemToRemove = process.argv[4];
-      const countToRemove = parseInt(process.argv[5], 10) || 1;
+      const countToRemove = parseInt(process.argv[5], 10);
       if (!elemToRemove) {
         console.error("No elem specified.");
       } else {
