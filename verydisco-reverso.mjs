@@ -4,8 +4,8 @@ import { readFileSync } from 'fs';
 
 // Function to reverse a very disco word
 function reverseVeryDisco(word) {
-  const length = Math.ceil(word.length / 2);
-  const firstHalf = word.slice(0, length-1);
+  const length = Math.floor(word.length / 2);
+  const firstHalf = word.slice(0, length);
   const secondHalf = word.slice(length);
   return secondHalf + firstHalf;
 }
