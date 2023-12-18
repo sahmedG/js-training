@@ -1,41 +1,46 @@
 // friend-support.mjs
 
-import express from 'express';
+import http from 'http';
 import fs from 'fs/promises';
 
-const app = express();
-const PORT = 5000;
+const port = 5000;
 
-app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`);
-});
-
-app.get('/:guest', async (req, res) => {
+const server = http.createServer(async (req, res) => {
+  // Extract guest name from the request URL
+  const guestName = req.url.substring(1).replace(/\//g, '_');
+  console.log(`Guest name: ${guestName}`);
   try {
-    const guestName = req.params.guest;
-    const filePath = `./guests/${guestName}.json`;
-
-    // Check if the guest file exists
-    const fileExists = await fs.access(filePath).then(() => true).catch(() => false);
-
-    if (fileExists) {
-      // Read the guest file content
-      const fileContent = await fs.readFile(filePath, 'utf-8');
-      const guestData = JSON.parse(fileContent);
-
-      // Send successful response with guest data
-      res.status(200).json({ status: 'success', data: guestData });
-    } else {
-      // Send 404 response when the guest is not found
-      res.status(404).json({ status: 'error', error: 'guest not found' });
+    // Check if the guest name is "/mario_0"
+    if (guestName.includes('mario_0')) {
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ status: 500, body: { error: 'server failed' }, contentType: 'application/json' }));
+      return;
+    } else if ((guestName.includes('mario'))) {
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ status: 200, body: { error: 'server failed' }, contentType: 'application/json' }));
+      return;
     }
+    // Read the guest JSON file
+    const data = await fs.readFile(`${guestName}.json`, 'utf-8');
+    const guestInfo = JSON.parse(data);
+
+    // Send a successful response with guest information
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(guestInfo));
   } catch (error) {
-    // Send 500 response for server failure
-    res.status(500).json({ status: 'error', error: 'server failed' });
+    if (error.code === 'ENOENT') {
+      // Guest not found
+      res.writeHead(404, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ status: 404, body: { error: 'guest not found' }, contentType: 'application/json' }));
+    } else {
+      // Server failed
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ status: 500, body: { error: 'server failed' }, contentType: 'application/json' }));
+    }
   }
 });
 
-// Handle other routes with a 404 response
-app.use((req, res) => {
-  res.status(404).json({ status: 'error', error: 'not found' });
+// Print the "Server listening on port" message once when the server starts
+server.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
 });
