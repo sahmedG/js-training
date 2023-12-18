@@ -12,6 +12,9 @@ if (!fileName) {
 
 const operation = process.argv[3];
 
+const outputfile = process.argv[4];
+console.log(outputfile);
+
 if (!operation || (operation !== 'encode' && operation !== 'decode')) {
   console.error('Please provide a valid operation (encode or decode) as the second argument.');
   process.exit(1);
@@ -40,9 +43,14 @@ try {
   console.error(`Error reading file "${fileName}": ${error.message}`);
   process.exit(1);
 }
-
+var outputFileName;
 // Determine the output file name based on the operation
-const outputFileName = operation === 'encode' ? 'cypher.txt' : 'clear.txt';
+if (outputfile != "") {
+  outputFileName = outputfile;
+  console.log(outputFileName);
+} else {
+  outputFileName = operation === 'encode' ? 'cypher.txt' : 'clear.txt';
+}
 
 // Save the result to the specified file in the current working directory
 const outputFilePath = resolve(process.cwd(), outputFileName);
