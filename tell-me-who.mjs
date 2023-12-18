@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync } from 'fs';
+import { readdirSync } from 'fs';
 import { resolve } from 'path';
 
 const directoryPath = process.argv[2] || '.';
@@ -13,14 +13,15 @@ try {
   process.exit(1);
 }
 
-const files = entries.filter(entry => {
-  const fullPath = resolve(resolvedPath, entry);
-  return readFileSync(fullPath, 'utf8').trim() === 'guest';
+const jsonFiles = entries.filter(entry => entry.endsWith('.json'));
+
+const names = jsonFiles.map(file => {
+  const nameWithoutExtension = file.replace('.json', '');
+  return nameWithoutExtension;
 });
 
-const sortedNames = files.map(file => file.split('.').slice(1).join('.')).sort();
+const sortedNames = names.sort();
 
 sortedNames.forEach((name, index) => {
-  const [lastname, firstname] = name.split(' ');
-  console.log(`${index + 1}. ${lastname} ${firstname}`);
+  console.log(`${index + 1}. ${name}`);
 });
