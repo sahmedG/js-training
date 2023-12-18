@@ -9,11 +9,11 @@ if (!fileName) {
   console.error('Please provide a file name as the first argument.');
   process.exit(1);
 }
-
+var outputfile;
 const operation = process.argv[3];
-
-// const outputfile = process.argv[4];
-console.log(outputfile);
+if (process.argv.length > 4 ) {
+ outputfile = process.argv[4];
+}
 
 if (!operation || (operation !== 'encode' && operation !== 'decode')) {
   console.error('Please provide a valid operation (encode or decode) as the second argument.');
@@ -47,7 +47,6 @@ var outputFileName;
 // Determine the output file name based on the operation
 if (outputfile != "") {
   outputFileName = outputfile;
-  console.log(outputFileName);
 } else {
   outputFileName = operation === 'encode' ? 'cypher.txt' : 'clear.txt';
 }
