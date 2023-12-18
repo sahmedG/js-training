@@ -34,7 +34,7 @@ const names = jsonFiles.map(file => {
   // Handle the special case for 'Hamilton'
   const formattedLastname = (lastname.toLowerCase() === 'hamilton') ? generateRandomString(6) : lastname;
 
-  return `${formattedLastname} ${firstname}`;
+  return `${lastname} ${firstname}`;
 });
 
 // Sort the names alphabetically
