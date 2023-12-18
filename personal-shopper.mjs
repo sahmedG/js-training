@@ -12,7 +12,7 @@ async function readShoppingList() {
     const data = await fs.readFile(shoppingListFile, "utf-8");
     return JSON.parse(data);
   } catch (error) {
-    return {};
+    return [];
   }
 }
 
