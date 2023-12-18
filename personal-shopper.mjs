@@ -26,17 +26,18 @@ async function createShoppingList() {
 }
 
 async function addToList(elem, count = 1) {
-  const list = await readShoppingList();
-  const existingItem = list.find((item) => item.element === elem);
-
-  if (existingItem) {
-    existingItem.count += count;
-  } else {
-    list.push({ element: elem, count });
-  }
-
-  await writeShoppingList(list);
-  console.log(`Added ${count} ${elem}(s) to the shopping list.`);
+    const list = await readShoppingList();
+    const existingItemIndex = list.findIndex((item) => item.element === elem);
+  
+    if (existingItemIndex !== -1) {
+      list[existingItemIndex].count += count;
+    } else {
+      list.push({ element: elem, count });
+    }
+  
+    await writeShoppingList(list);
+    console.log(`Added ${count} ${elem}(s) to the shopping list.`);
+  
 }
 
 async function removeFromList(elem, count = 1) {
