@@ -7,6 +7,13 @@ import { resolve } from 'path';
 const PORT = 5000;
 
 const server = http.createServer((req, res) => {
+  // Check if the request is for the root endpoint
+  if (req.url === '/') {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ message: 'Welcome to the friend-support server!' }));
+    return;
+  }
+
   const guestName = req.url.substring(1); // Remove the leading slash
 
   // Check if the request is a valid GET request
