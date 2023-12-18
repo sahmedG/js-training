@@ -21,7 +21,7 @@ async function writeShoppingList(list) {
 }
 
 async function createShoppingList() {
-  await writeShoppingList([{}]);
+  await writeShoppingList();
   console.log(`Shopping list created in ${shoppingListFile}.`);
 }
 
