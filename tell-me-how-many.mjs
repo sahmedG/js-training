@@ -3,22 +3,23 @@
 import { readdirSync, statSync } from 'fs';
 import { resolve } from 'path';
 
-function isFile(path) {
-  return statSync(path).isFile();
-}
-
-const directoryPath = process.argv[2] || '.'; 
+const directoryPath = process.argv[2] || '.';
 
 const resolvedPath = resolve(directoryPath);
 
 let entries;
 try {
-  entries = readdirSync(resolvedPath).filter(entry => isFile(resolve(resolvedPath, entry)));
+  entries = readdirSync(resolvedPath);
 } catch (error) {
   console.error(`Error reading directory: ${error.message}`);
   process.exit(1);
 }
 
-const numberOfEntries = entries.length;
+const files = entries.filter(entry => {
+  const fullPath = resolve(resolvedPath, entry);
+  return statSync(fullPath).isFile();
+});
 
-console.log(`Number of files in "${resolvedPath}": ${numberOfEntries}`);
+const numberOfFiles = files.length;
+
+console.log(numberOfFiles);
