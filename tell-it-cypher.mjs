@@ -12,12 +12,12 @@ if (!fileName) {
 
 const operation = process.argv[3];
 
-// const filename = process.argv[4]; 
-
 if (!operation || (operation !== 'encode' && operation !== 'decode')) {
   console.error('Please provide a valid operation (encode or decode) as the second argument.');
   process.exit(1);
 }
+
+const outputFileName = process.argv[4] || (operation === 'encode' ? 'cypher.txt' : 'clear.txt');
 
 const inputFilePath = resolve(process.cwd(), fileName);
 
@@ -43,17 +43,13 @@ try {
   process.exit(1);
 }
 
-// Determine the output file name based on the operation
-const outputFileName = operation === 'encode' ? 'cypher.txt' : 'clear.txt';
-
 // Save the result to the specified file in the current working directory
 const outputFilePath = resolve(process.cwd(), outputFileName);
 
 try {
-    writeFileSync(outputFilePath, result, 'utf8');
-    console.log(`File ${outputFileName} ${operation === 'encode' ? 'encoded' : 'decoded'} successfully.`);
-  } catch (error) {
-    console.error(`Error writing to ${outputFileName}: ${error.message}`);
-    process.exit(1);
-  }
-  
+  writeFileSync(outputFilePath, result, 'utf8');
+  console.log(`File ${outputFileName} ${operation === 'encode' ? 'encoded' : 'decoded'} successfully.`);
+} catch (error) {
+  console.error(`Error writing to ${outputFileName}: ${error.message}`);
+  process.exit(1);
+}
