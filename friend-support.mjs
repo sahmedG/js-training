@@ -1,38 +1,41 @@
 // friend-support.mjs
 
-import http from 'http';
+import express from 'express';
 import fs from 'fs/promises';
 
-const port = 5000;
+const app = express();
+const PORT = 5000;
 
-const server = http.createServer(async (req, res) => {
-  // Extract guest name from the request URL
-  const guestName = req.url.substring(1);
+app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
+});
 
+app.get('/:guest', async (req, res) => {
   try {
-    // Read the guest JSON file
-    const data = await fs.readFile(`${guestName}.json`, 'utf-8');
-    const guestInfo = JSON.parse(data);
+    const guestName = req.params.guest;
+    const filePath = `./guests/${guestName}.json`;
 
-    // Send a successful response with guest information
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify(guestInfo));
-  } catch (error) {
-    if (error.code === 'ENOENT') {
-      // Guest not found
-      const expBody = { error: 'guest not found' };
-      res.writeHead(404, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ status: 404, body: expBody, contentType: 'application/json' }));
+    // Check if the guest file exists
+    const fileExists = await fs.access(filePath).then(() => true).catch(() => false);
+
+    if (fileExists) {
+      // Read the guest file content
+      const fileContent = await fs.readFile(filePath, 'utf-8');
+      const guestData = JSON.parse(fileContent);
+
+      // Send successful response with guest data
+      res.status(200).json({ status: 'success', data: guestData });
     } else {
-      // Server failed
-      const expBody = { error: 'server failed' };
-      res.writeHead(500, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ status: 500, body: expBody, contentType: 'application/json' }));
+      // Send 404 response when the guest is not found
+      res.status(404).json({ status: 'error', error: 'guest not found' });
     }
+  } catch (error) {
+    // Send 500 response for server failure
+    res.status(500).json({ status: 'error', error: 'server failed' });
   }
 });
 
-// Print the "Server listening on port" message once when the server starts
-server.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+// Handle other routes with a 404 response
+app.use((req, res) => {
+  res.status(404).json({ status: 'error', error: 'not found' });
 });
