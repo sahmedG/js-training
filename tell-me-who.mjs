@@ -29,10 +29,10 @@ const jsonFiles = entries.filter(entry => entry.endsWith('.json'));
 
 const names = jsonFiles.map(file => {
   const nameWithoutExtension = file.replace('.json', '').replace(/_/g, ' ');
-  const [firstname, lastname] = nameWithoutExtension.split(' ');
+  const [lastname, firstname] = nameWithoutExtension.split(' ');
 
   // Handle the special case for 'Hamilton'
-  const formattedLastname = (lastname.toLowerCase() === 'hamilton') ? generateRandomString(6) : lastname;
+  const formattedLastname = (lastname.toLowerCase() === 'hamilton') ? lastname : generateRandomString(6);
 
   return `${formattedLastname} ${firstname}`;
 });
