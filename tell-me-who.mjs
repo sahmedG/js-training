@@ -40,5 +40,5 @@ const names = jsonFiles.map((file, index) => {
 });
 
 names.forEach(name => {
-  console.log(`\`${name}\`,`);
+  console.log('${name}');
 });
