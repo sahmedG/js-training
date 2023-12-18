@@ -14,9 +14,11 @@ const discofy = (word) => {
     const result = discoWords.join(' ');
     console.log(result);
   };
-//   / ' (🕺)'
+  
+  // Get the first command line argument after the program name
   const input = process.argv.slice(2).join(' ');
   
+  // Check if an argument is provided
   if (input) {
     veryDisco(input);
   } else {
