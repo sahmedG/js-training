@@ -20,12 +20,18 @@ async function readFileToString(filePath) {
   }
 }
 
+async function writeFileFromString(filePath, data) {
+  try {
+    await fs.writeFile(filePath, data, "utf-8");
+    return true;
+  } catch (error) {
+    console.error(`Error writing file: ${error.message}`);
+    return false;
+  }
+}
+
 const server = http.createServer(async (req, res) => {
-  if (req.method !== "GET") {
-    res.writeHead(405, { "Content-Type": "application/json" });
-    const errorResponse = { error: "Method Not Allowed" };
-    res.end(JSON.stringify(errorResponse));
-  } else {
+  if (req.method === "GET") {
     let jsonInfo = await readFileToString(`guests/${req.url}.json`);
     if (jsonInfo === 404) {
       res.writeHead(404, { "Content-Type": "application/json" });
@@ -39,6 +45,29 @@ const server = http.createServer(async (req, res) => {
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(jsonInfo);
     }
+  } else if (req.method === "POST") {
+    let body = "";
+    req.on("data", (chunk) => {
+      body += chunk.toString();
+    });
+
+    req.on("end", async () => {
+      const fileName = `guests/${req.url}.json`;
+      const success = await writeFileFromString(fileName, body);
+
+      if (success) {
+        res.writeHead(201, { "Content-Type": "application/json" });
+        res.end(body);
+      } else {
+        res.writeHead(500, { "Content-Type": "application/json" });
+        const errorResponse = { error: "server failed" };
+        res.end(JSON.stringify(errorResponse));
+      }
+    });
+  } else {
+    res.writeHead(405, { "Content-Type": "application/json" });
+    const errorResponse = { error: "Method Not Allowed" };
+    res.end(JSON.stringify(errorResponse));
   }
 });
 
