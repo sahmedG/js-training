@@ -8,7 +8,7 @@ const discofy = (word) => {
   };
   
   const veryDisco = (input) => {
-    const words = input.split(' ');s
+    const words = input.split(' ');
     const discoWords = words.map(discofy);
   
     const result = discoWords.join(' ');
