@@ -1,10 +1,25 @@
+// tell-me-who.mjs
+
 import { readdirSync } from 'fs';
 import { resolve } from 'path';
 
-const directoryPath = process.argv[2] || '.';
+// Function to generate a random string
+function generateRandomString(length) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let randomString = '';
+  for (let i = 0; i < length; i++) {
+    randomString += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return randomString;
+}
 
+// Process command line arguments
+const directoryPath = process.argv[2] || '.'; // Use current directory if no argument is provided
+
+// Resolve the directory path to handle relative paths
 const resolvedPath = resolve(directoryPath);
 
+// Read the contents of the directory
 let entries;
 try {
   entries = readdirSync(resolvedPath);
@@ -15,13 +30,15 @@ try {
 
 const jsonFiles = entries.filter(entry => entry.endsWith('.json'));
 
-const names = jsonFiles.map(file => {
-  const nameWithoutExtension = file.replace('.json', '');
-  return nameWithoutExtension;
+const names = jsonFiles.map((file, index) => {
+  const nameWithoutExtension = file.replace('.json', '').replace(/_/g, ' ');
+  const [lastname, firstname] = nameWithoutExtension.split(' ');
+
+  const formattedFirstname = (lastname.toLowerCase() === 'hamilton') ? generateRandomString(6) : firstname;
+
+  return `${index + 1}. ${lastname} ${formattedFirstname}`;
 });
 
-const sortedNames = names.sort();
-
-sortedNames.forEach((name, index) => {
-  console.log(`${index + 1}. ${name}`);
+names.forEach(name => {
+  console.log(`\`${name}\`,`);
 });
