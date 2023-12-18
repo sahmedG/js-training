@@ -8,77 +8,64 @@ if (!shoppingListFile) {
 }
 
 async function readShoppingList() {
-    try {
-      const data = await fs.readFile(shoppingListFile, "utf-8");
-      const parsedData = JSON.parse(data);
-  
-      // If the parsed data is an array with a single element, return that element
-      if (Array.isArray(parsedData) && parsedData.length === 1) {
-        return parsedData[0];
-      }
-  
-      return parsedData;
-    } catch (error) {
-      return {};
-    }
+  try {
+    const data = await fs.readFile(shoppingListFile, "utf-8");
+    return JSON.parse(data) || {};
+  } catch (error) {
+    return {};
   }
+}
 
 async function writeShoppingList(list) {
   await fs.writeFile(shoppingListFile, JSON.stringify(list, null, 2), "utf-8");
 }
 
 async function createShoppingList() {
-  await writeShoppingList([]);
+  await writeShoppingList({});
   console.log(`Shopping list created in ${shoppingListFile}.`);
 }
 
 async function addToList(elem, count = 1) {
-    const list = await readShoppingList();
-    const existingItemIndex = list.findIndex((item) => item.element === elem);
-  
-    if (existingItemIndex !== -1) {
-      list[existingItemIndex].count += count;
-    } else {
-      list.push({ element: elem, count });
-    }
-  
-    await writeShoppingList(list);
-    console.log(`Added ${count} ${elem}(s) to the shopping list.`);
-  
+  const list = await readShoppingList();
+
+  if (!list[elem]) {
+    list[elem] = count;
+  } else {
+    list[elem] += count;
+  }
+
+  await writeShoppingList(list);
+  console.log(`Added ${count} ${elem}(s) to the shopping list.`);
 }
 
-async function removeFromList(elem, count = 0) {
-    const list = await readShoppingList();
-    const existingItem = list.find((item) => item.element === elem);
-  
-    if (!existingItem) {
-      console.log(`Element ${elem} not found in the shopping list.`);
-      return;
-    }
-  
-    existingItem.count = Math.max(existingItem.count - count, 0);
-  
-    if (existingItem.count === 0) {
-      const index = list.indexOf(existingItem);
-      list.splice(index, 1);
-      console.log(`Removed all ${elem} from the shopping list.`);
-    } else {
-      console.log(`Subtracted ${count} from ${elem} in the shopping list.`);
-    }
-  
-    await writeShoppingList(list);
+async function removeFromList(elem, count = 1) {
+  const list = await readShoppingList();
+
+  if (!list[elem]) {
+    console.log(`Element ${elem} not found in the shopping list.`);
+    return;
   }
-  
-  
+
+  list[elem] = Math.max(list[elem] - count, 0);
+
+  if (list[elem] === 0) {
+    delete list[elem];
+    console.log(`Removed all ${elem} from the shopping list.`);
+  } else {
+    console.log(`Subtracted ${count} from ${elem} in the shopping list.`);
+  }
+
+  await writeShoppingList(list);
+}
 
 async function listShoppingList() {
   const list = await readShoppingList();
 
-  if (list.length === 0) {
+  if (Object.keys(list).length === 0) {
     console.log("Empty list.");
   } else {
-    list.forEach((item) => {
-      console.log(`- ${item.element} (${item.count})`);
+    Object.entries(list).forEach(([element, count]) => {
+      console.log(`- ${element} (${count})`);
     });
   }
 }
