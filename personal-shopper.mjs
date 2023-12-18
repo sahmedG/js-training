@@ -45,26 +45,29 @@ async function addToList(elem, count = 1) {
     await writeShoppingList(list);
   }
 
-async function removeFromList(elem, count = 1) {
-  const list = await readShoppingList();
-
-  if (!list[elem]) {
-    console.log(`Element ${elem} not found in the shopping list.`);
-    return;
+  async function removeFromList(elem, count = 1) {
+    const list = await readShoppingList();
+  
+    if (!list[elem] && count < 0) {
+      // If the element doesn't exist and count is negative, create it with the absolute value of the count
+      list[elem] = Math.abs(count);
+      console.log(`Added ${Math.abs(count)} ${elem}(s) to the shopping list.`);
+    } else if (list[elem]) {
+      // Update the count and remove the element if it becomes 0
+      list[elem] = Math.max(list[elem] - count, 0);
+  
+      if (list[elem] === 0) {
+        delete list[elem];
+        console.log(`Removed all ${elem} from the shopping list.`);
+      } else {
+        console.log(`Subtracted ${count} from ${elem} in the shopping list.`);
+      }
+    }
+  
+    await writeShoppingList(list);
   }
-
-  list[elem] = Math.max(list[elem] - count, 0);
-
-  if (list[elem] === 0) {
-    delete list[elem];
-    console.log(`Removed all ${elem} from the shopping list.`);
-  } else {
-    console.log(`Subtracted ${count} from ${elem} in the shopping list.`);
-  }
-
-  await writeShoppingList(list);
-}
-
+  
+  
 async function listShoppingList() {
   const list = await readShoppingList();
 
