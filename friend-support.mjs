@@ -13,7 +13,7 @@ const server = http.createServer(async (req, res) => {
   const urlParts = url.parse(req.url, true);
   const expBody = urlParts.query.expBody;
 
-  if (guestName.includes('mario')) {
+  if (guestName.includes('mario') && expBody == "") {
     const guestName2 = req.url.match(/mario_(\w+)$/);
     guestNumber = guestName2[1];
   }
@@ -26,7 +26,7 @@ const server = http.createServer(async (req, res) => {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ status: 200, body: { message: expBody }, contentType: 'application/json' }));
     return;
-  } else if (guestName === 'andrea_bianchi') {
+  } else  {
     res.writeHead(404, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ status: 404, body: { error: 'guest not found' }, contentType: 'application/json' }));
     return;
@@ -36,3 +36,4 @@ const server = http.createServer(async (req, res) => {
 server.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
+//if (guestName === 'andrea_bianchi')
