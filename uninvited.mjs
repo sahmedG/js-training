@@ -6,8 +6,6 @@ import { promises as fs } from 'fs';
 const PORT = 5000;
 
 const server = http.createServer(async (req, res) => {
-  console.log(`Server is listening on port ${PORT}`);
-
   if (req.method === 'POST') {
     let body = '';
 
@@ -41,6 +39,7 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
+// Listen for server start
 server.listen(PORT, (err) => {
   if (err) {
     return console.error(`Error starting server: ${err}`);
