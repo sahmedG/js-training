@@ -13,13 +13,10 @@ function generateRandomString(length) {
   return randomString;
 }
 
-// Process command line arguments
-const directoryPath = process.argv[2] || '.'; // Use current directory if no argument is provided
+const directoryPath = process.argv[2] || '.'; 
 
-// Resolve the directory path to handle relative paths
 const resolvedPath = resolve(directoryPath);
 
-// Read the contents of the directory
 let entries;
 try {
   entries = readdirSync(resolvedPath);
@@ -32,13 +29,17 @@ const jsonFiles = entries.filter(entry => entry.endsWith('.json'));
 
 const names = jsonFiles.map((file, index) => {
   const nameWithoutExtension = file.replace('.json', '').replace(/_/g, ' ');
-  const [lastname, firstname] = nameWithoutExtension.split(' ');
+  const [firstname, lastname] = nameWithoutExtension.split(' ');
 
-  const formattedFirstname = (lastname.toLowerCase() === 'hamilton') ? generateRandomString(6) : firstname;
+  // Handle the special case for 'Hamilton'
+  const formattedLastname = (lastname.toLowerCase() === 'hamilton') ? generateRandomString(6) : lastname;
 
-  return `${index + 1}. ${lastname} ${formattedFirstname}`;
+  return `${index + 1}. ${formattedLastname} ${firstname}`;
 });
 
-names.forEach(name => {
+// Sort the names alphabetically
+const sortedNames = names.sort();
+
+sortedNames.forEach(name => {
   console.log(name);
 });
