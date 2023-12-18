@@ -20,7 +20,7 @@ const server = http.createServer(async (req, res) => {
       return;
     } else if (guestNumber != 0) {
       res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ status: 200, body: guestNumber, contentType: 'application/json' }));
+      res.end(JSON.stringify({ status: 200, body: { message: guestNumber }, contentType: 'application/json' }));
       return;
     } else if (guestName == 'andrea_bianchi'){
       res.writeHead(404, { 'Content-Type': 'application/json' });
