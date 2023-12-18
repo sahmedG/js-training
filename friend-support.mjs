@@ -13,7 +13,7 @@ const server = http.createServer(async (req, res) => {
   const urlParts = url.parse(req.url, true);
   const expBody = urlParts.query.expBody;
 
-  if (guestName.includes('mario') && expBody == "") {
+  if (guestName.includes('mario')) {
     const guestName2 = req.url.match(/mario_(\w+)$/);
     guestNumber = guestName2[1];
   }
@@ -24,7 +24,7 @@ const server = http.createServer(async (req, res) => {
     return;
   } else if (guestNumber !== 0 && expBody) {
     res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ status: 200, body: { message: expBody }, contentType: 'application/json' }));
+    res.end(JSON.stringify({ status: 200, body: { message: guestNumber }, contentType: 'application/json' }));
     return;
   } else  {
     res.writeHead(404, { 'Content-Type': 'application/json' });
