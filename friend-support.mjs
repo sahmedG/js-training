@@ -39,7 +39,6 @@
 // //if (guestName === 'andrea_bianchi')
 
 
-
 // friend-support.mjs
 
 import http from 'http';
@@ -48,8 +47,6 @@ import fs from 'fs/promises';
 const PORT = 5000;
 
 const server = http.createServer(async (req, res) => {
-  console.log(`Server is listening on port ${PORT}`);
-
   // Extract guest name from the request URL
   const guestName = req.url.slice(1); // Remove leading '/'
   const filePath = `${guestName}.json`;
@@ -75,4 +72,7 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
-server.listen(PORT);
+// Listen for server start
+server.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
+});
