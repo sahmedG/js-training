@@ -4,8 +4,8 @@ import { readFileSync } from 'fs';
 
 function reverseVeryDisco(word) {
   const length = Math.ceil(word.length / 2);
-  const firstHalf = word.slice(0, length+1);
-  const secondHalf = word.slice(length);
+  const firstHalf = word.slice(0, length);
+  const secondHalf = word.slice(length+1);
   return secondHalf + firstHalf;
 }
 
