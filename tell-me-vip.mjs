@@ -1,11 +1,12 @@
 // tell-me-vip.mjs
 
-import { readdirSync, readFileSync, writeFileSync } from 'fs';
-import { resolve } from 'path';
+import { readdirSync, readFileSync, writeFileSync, mkdirSync } from 'fs';
+import { resolve, dirname } from 'path';
 
-const directoryPath = process.argv[2] || '.'; 
+const directoryPath = process.argv[2] || '.';
 
 const resolvedPath = resolve(directoryPath);
+const currentWorkingDirectory = process.cwd();
 
 let entries;
 try {
@@ -36,12 +37,20 @@ const vipGuests = jsonFiles
     }
   })
   .filter(guest => guest !== null);
-
 const sortedVipGuests = vipGuests.sort();
 
 const formattedVipGuests = sortedVipGuests.map((name, index) => `${index + 1}. ${name}`);
 
-const vipFilePath = resolve(resolvedPath, 'vip.txt');
+const vipFilePath = resolve(currentWorkingDirectory, 'vip.txt');
+const vipFileDirectory = dirname(vipFilePath);
+
+try {
+  mkdirSync(vipFileDirectory, { recursive: true });
+} catch (error) {
+  console.error(`Error creating directory "${vipFileDirectory}": ${error.message}`);
+  process.exit(1);
+}
+
 try {
   writeFileSync(vipFilePath, formattedVipGuests.join('\n'), 'utf8');
   console.log(`VIP list saved to ${vipFilePath}`);
