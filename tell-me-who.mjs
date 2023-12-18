@@ -27,19 +27,20 @@ try {
 
 const jsonFiles = entries.filter(entry => entry.endsWith('.json'));
 
-const names = jsonFiles.map((file, index) => {
+const names = jsonFiles.map(file => {
   const nameWithoutExtension = file.replace('.json', '').replace(/_/g, ' ');
   const [firstname, lastname] = nameWithoutExtension.split(' ');
 
   // Handle the special case for 'Hamilton'
   const formattedLastname = (lastname.toLowerCase() === 'hamilton') ? generateRandomString(6) : lastname;
 
-  return `${index + 1}. ${formattedLastname} ${firstname}`;
+  return `${formattedLastname} ${firstname}`;
 });
 
 // Sort the names alphabetically
 const sortedNames = names.sort();
 
-sortedNames.forEach(name => {
-  console.log(name);
+// Print the sorted names with indices
+sortedNames.forEach((name, index) => {
+  console.log(`${index + 1}. ${name}`);
 });
