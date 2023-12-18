@@ -9,13 +9,13 @@ const discofy = (word) => {
   
   const veryDisco = (input) => {
     const words = input.split(' ');
-    const discoWords = words.map((word) => 'verydisco');
+    const discoWords = words.map(discofy);
   
-    const result = discoWords.map(discofy).join(' ');
+    const result = discoWords.join(' ');
     console.log(result + ' (💃🕺)');
   };
   
-  const input = process.argv[2];
+  const input = process.argv.slice(2).join(' ');
   
   if (input) {
     veryDisco(input);
