@@ -1,40 +1,33 @@
 // friend-support.mjs
 
 import http from 'http';
+import fs from 'fs/promises';
 
 const port = 5000;
 
-const server = http.createServer((req, res) => {
-  // Extract the last name from the request URL
-  const matchMario = req.url.match(/^\/mario_(\w+)$/);
-  const matchAndrea = req.url === '/andrea_bianchi';
-  
-  if (matchMario) {
-    const lastName = matchMario[1];
-    
-    // Construct the response body
-    const expBody = { message: `value of ${lastName}` };
-    
-    // Send a response with status code 200, response body, and content type
+const server = http.createServer(async (req, res) => {
+  // Extract guest name from the request URL
+  const guestName = req.url.substring(1);
+
+  try {
+    // Read the guest JSON file
+    const data = await fs.readFile(`${guestName}.json`, 'utf-8');
+    const guestInfo = JSON.parse(data);
+
+    // Send a successful response with guest information
     res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ status: 200, body: expBody, contentType: 'application/json' }));
-  } else if (matchAndrea) {
-    // Send a response with status code 404, guest not found error, and content type
-    const expBody = { error: 'guest not found' };
-    res.writeHead(404, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ status: 404, body: expBody, contentType: 'application/json' }));
-  } else {
-    // Handle other URLs (e.g., 500 for server failure)
-    const randLastName = 0; // Replace with the actual value of ctx.randLastName
-    if (randLastName === 0) {
-      // Send a response with status code 500, server failed error, and content type
+    res.end(JSON.stringify(guestInfo));
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      // Guest not found
+      const expBody = { error: 'guest not found' };
+      res.writeHead(404, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ status: 404, body: expBody, contentType: 'application/json' }));
+    } else {
+      // Server failed
       const expBody = { error: 'server failed' };
       res.writeHead(500, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ status: 500, body: expBody, contentType: 'application/json' }));
-    } else {
-      // Handle other URLs with a 404 response
-      res.writeHead(404, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ error: 'not found' }));
     }
   }
 });
