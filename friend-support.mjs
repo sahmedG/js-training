@@ -1,32 +1,26 @@
 // friend-support.mjs
 
 import http from 'http';
-import fs from 'fs/promises';
 
 const port = 5000;
 
-const server = http.createServer(async (req, res) => {
-  // Extract guest name from the request URL
-  const guestName = req.url.substring(1);
-
-  try {
-    // Read the guest JSON file
-    const data = await fs.readFile(`${guestName}.json`, 'utf-8');
-    const guestInfo = JSON.parse(data);
-
-    // Send a successful response with guest information
+const server = http.createServer((req, res) => {
+  // Extract the last name from the request URL
+  const match = req.url.match(/^\/mario_(\w+)$/);
+  
+  if (match) {
+    const lastName = match[1];
+    
+    // Send a response with the specified message and status code 200
+    const responseMessage = `value of ${lastName}`;
+    const responseData = { message: responseMessage, status: 200 };
+    
     res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify(guestInfo));
-  } catch (error) {
-    if (error.code === 'ENOENT') {
-      // Guest not found
-      res.writeHead(404, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ error: 'guest not found' }));
-    } else {
-      // Server failed
-      res.writeHead(500, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ error: 'server failed' }));
-    }
+    res.end(JSON.stringify(responseData));
+  } else {
+    // Handle other URLs (e.g., 404)
+    res.writeHead(404, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ error: 'not found' }));
   }
 });
 
