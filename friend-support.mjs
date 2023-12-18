@@ -6,8 +6,6 @@ import fs from 'fs/promises';
 const port = 5000;
 
 const server = http.createServer(async (req, res) => {
-  console.log(`Server listening on port ${port}`);
-
   // Extract guest name from the request URL
   const guestName = req.url.substring(1);
 
@@ -32,5 +30,7 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
-// Start the server
-server.listen(port);
+// Print the "Server listening on port" message once when the server starts
+server.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});
