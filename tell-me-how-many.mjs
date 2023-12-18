@@ -7,7 +7,7 @@ function isFile(path) {
   return statSync(path).isFile();
 }
 
-const directoryPath = process.argv[1] || '.'; 
+const directoryPath = process.argv[2] || '.'; 
 
 const resolvedPath = resolve(directoryPath);
 
