@@ -20,15 +20,17 @@ const server = http.createServer((req, res) => {
     res.end(JSON.stringify({ status: 200, body: expBody, contentType: 'application/json' }));
   } else if (matchAndrea) {
     // Send a response with status code 404, guest not found error, and content type
+    const expBody = { error: 'guest not found' };
     res.writeHead(404, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ status: 404, body: { error: 'guest not found' }, contentType: 'application/json' }));
+    res.end(JSON.stringify({ status: 404, body: expBody, contentType: 'application/json' }));
   } else {
     // Handle other URLs (e.g., 500 for server failure)
     const randLastName = 0; // Replace with the actual value of ctx.randLastName
     if (randLastName === 0) {
       // Send a response with status code 500, server failed error, and content type
+      const expBody = { error: 'server failed' };
       res.writeHead(500, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ status: 500, body: { error: 'server failed' }, contentType: 'application/json' }));
+      res.end(JSON.stringify({ status: 500, body: expBody, contentType: 'application/json' }));
     } else {
       // Handle other URLs with a 404 response
       res.writeHead(404, { 'Content-Type': 'application/json' });
