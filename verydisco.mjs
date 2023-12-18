@@ -12,9 +12,9 @@ const discofy = (word) => {
     const discoWords = words.map(discofy);
   
     const result = discoWords.join(' ');
-    console.log(result + ' (🕺)');
+    console.log(result);
   };
-  
+//   / ' (🕺)'
   const input = process.argv.slice(2).join(' ');
   
   if (input) {
