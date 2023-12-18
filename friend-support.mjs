@@ -50,6 +50,7 @@ const server = http.createServer(async (req, res) => {
   // Extract guest name from the request URL
   const guestName = req.url.slice(1); // Remove leading '/'
   const filePath = `${guestName}.json`;
+  const urlParts = url.parse(req.url, true);
   const expBody = urlParts.query.expBody;
   try {
     // Try to read the guest JSON file
