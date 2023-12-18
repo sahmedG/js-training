@@ -52,6 +52,7 @@ const server = http.createServer(async (req, res) => {
   const filePath = `${guestName}.json`;
   const urlParts = url.parse(req.url, true);
   const expBody = urlParts.query.expBody;
+
   try {
     // Try to read the guest JSON file
     const data = await fs.readFile(filePath, 'utf-8');
@@ -61,10 +62,13 @@ const server = http.createServer(async (req, res) => {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify(guestInfo));
   } catch (error) {
-    if (error.code === 'ENOENT') {
+    if (expBody != "") {
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: expBody }));
+    } else if (error.code === 'ENOENT') {
       // Guest not found
       res.writeHead(404, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ message: expBody }));
+      res.end(JSON.stringify({ error: 'guest not found' }));
     } else {
       // Server failed for some reason
       res.writeHead(500, { 'Content-Type': 'application/json' });
