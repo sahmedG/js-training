@@ -8,11 +8,11 @@ const discofy = (word) => {
   };
   
   const veryDisco = (input) => {
-    const words = input.split(' ');
+    const words = input.split(' ');s
     const discoWords = words.map(discofy);
   
     const result = discoWords.join(' ');
-    console.log(result + '(🕺)');
+    console.log(result + ' (🕺)');
   };
   
   const input = process.argv.slice(2).join(' ');
