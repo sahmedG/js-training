@@ -11,12 +11,12 @@ const server = http.createServer((req, res) => {
   if (match) {
     const lastName = match[1];
     
-    // Send a response with the specified message and status code 200
-    const responseMessage = `value of ${lastName}`;
-    const responseData = { message: responseMessage, status: 200 };
+    // Construct the response body
+    const expBody = { message: `value of ${lastName}` };
     
+    // Send a response with status code 200, response body, and content type
     res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify(responseData));
+    res.end(JSON.stringify({ status: 200, body: expBody, contentType: 'application/json' }));
   } else {
     // Handle other URLs (e.g., 404)
     res.writeHead(404, { 'Content-Type': 'application/json' });
