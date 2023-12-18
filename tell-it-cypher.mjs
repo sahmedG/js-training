@@ -12,7 +12,7 @@ if (!fileName) {
 
 const operation = process.argv[3];
 
-const outputfile = process.argv[4];
+// const outputfile = process.argv[4];
 console.log(outputfile);
 
 if (!operation || (operation !== 'encode' && operation !== 'decode')) {
