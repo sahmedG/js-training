@@ -14,7 +14,7 @@ async function readFileToString(filePath) {
     if (error.code === "ENOENT") {
       return 404;
     } else {
-      console.error('Error reading file: ${error.message}');
+      console.error(`Error reading file: ${error.message}`);
       return 500;
     }
   }
@@ -26,7 +26,7 @@ const server = http.createServer(async (req, res) => {
     const errorResponse = { error: "Method Not Allowed" };
     res.end(JSON.stringify(errorResponse));
   } else {
-    let jsonInfo = await readFileToString('guests/${req.url}.json');
+    let jsonInfo = await readFileToString(`guests/${req.url}.json`);
     if (jsonInfo === 404) {
       res.writeHead(404, { "Content-Type": "application/json" });
       const errorResponse = { error: "guest not found" };
@@ -45,7 +45,7 @@ const server = http.createServer(async (req, res) => {
 const PORT = 5000;
 server.listen(PORT, (err) => {
   if (err) {
-    return console.error('Error starting server: ${err}');
+    return console.error(`Error starting server: ${err}`);
   }
-  console.log('Server is listening on port ${PORT}');
+  console.log(`Server is listening on port ${PORT}`);
 });
