@@ -10,7 +10,7 @@ async function readGuests(guestsDirectory) {
       const data = await fs.readFile(filePath, "utf-8");
       const guestInfo = JSON.parse(data);
 
-      if (guestInfo.answer === "yes") {
+      if (guestInfo.answer === 'yes') {
         vips.push(guestInfo);
       }
     }
@@ -25,8 +25,9 @@ async function readGuests(guestsDirectory) {
 async function updateShoppingList(existingList, vips) {
   const updatedList = { ...existingList };
 
-  // Drinks
   const numVips = vips.length;
+
+  // Drinks
   const beers = Math.ceil(numVips / 6);
   const wine = Math.ceil(numVips / 4);
   const water = Math.ceil(numVips / 4);
@@ -38,21 +39,10 @@ async function updateShoppingList(existingList, vips) {
   if (softs > 0) updatedList["soft-bottles"] = softs;
 
   // Food
-  const veggiesVegans = Math.ceil(numVips / 3);
   const burgers = numVips;
-  const sardines = numVips;
-  const kebabs = numVips;
   const potatoes = numVips;
 
-  if (veggiesVegans > 0) updatedList["eggplants"] = veggiesVegans;
-  if (veggiesVegans > 0) updatedList["mushrooms"] = veggiesVegans;
-  if (veggiesVegans > 0) updatedList["hummus"] = veggiesVegans;
-  if (veggiesVegans > 0) updatedList["courgettes"] = veggiesVegans;
-
   if (burgers > 0) updatedList["burgers"] = burgers;
-  if (sardines > 0) updatedList["sardines"] = sardines;
-  if (kebabs > 0) updatedList["kebabs"] = kebabs;
-
   if (potatoes > 0) updatedList["potatoes"] = potatoes;
 
   return updatedList;
