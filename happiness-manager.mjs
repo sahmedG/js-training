@@ -42,8 +42,8 @@ async function updateShoppingList(existingList, vips) {
   const burgers = numVips;
   const potatoes = numVips;
 
-  if (burgers > 0) updatedList["burgers"] = burgers;
-  if (potatoes > 0) updatedList["potatoes"] = potatoes;
+  updatedList["burgers"] = burgers;
+  updatedList["potatoes"] = potatoes;
 
   return updatedList;
 }
