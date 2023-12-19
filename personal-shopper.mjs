@@ -47,7 +47,6 @@ async function addToList(elem, count = 1) {
 
   async function removeFromList(elem, count) {
     const list = await readShoppingList();
-  
     if (count === undefined) {
       // If count is not specified, delete the element entirely
       delete list[elem];
@@ -67,7 +66,6 @@ async function addToList(elem, count = 1) {
       list[elem] = Math.abs(count);
       console.log(`Added ${Math.abs(count)} ${elem}(s) to the shopping list.`);
     }
-  
     await writeShoppingList(list);
   }
   
@@ -103,6 +101,11 @@ async function handleCommand() {
     case "rm":
       const elemToRemove = process.argv[4];
       const countToRemove = parseInt(process.argv[5], 10);
+      if (process.argv.length === 5){
+       const list = await readShoppingList();
+        delete list[elemToRemove];
+        await writeShoppingList(list);
+      }
       if (!elemToRemove) {
         console.error("No elem specified.");
       } else {
