@@ -47,22 +47,25 @@ async function addToList(elem, count = 1) {
 
   async function removeFromList(elem, count) {
     const list = await readShoppingList();
-    if (count == NaN) {
-        delete list[elem];
-    }
-    if (!list[elem] && count < 0) {
-      // If the element doesn't exist and count is negative, create it with the absolute value of the count
-      list[elem] = Math.abs(count);
-      console.log(`Added ${Math.abs(count)} ${elem}(s) to the shopping list.`);
-    } else if (list[elem]) {
+  
+    if (count === undefined) {
+      // If count is not specified, delete the element entirely
+      delete list[elem];
+      console.log(`Removed all ${elem} from the shopping list.`);
+    } else if (list.hasOwnProperty(elem)) {
       // Update the count and remove the element if it becomes 0
       list[elem] = Math.max(list[elem] - count, 0);
+  
       if (list[elem] === 0) {
         delete list[elem];
         console.log(`Removed all ${elem} from the shopping list.`);
       } else {
         console.log(`Subtracted ${count} from ${elem} in the shopping list.`);
       }
+    } else if (count < 0) {
+      // If the element doesn't exist and count is negative, create it with the absolute value of the count
+      list[elem] = Math.abs(count);
+      console.log(`Added ${Math.abs(count)} ${elem}(s) to the shopping list.`);
     }
   
     await writeShoppingList(list);
