@@ -117,12 +117,13 @@ async function handleCommand() {
       break;
     case "help":
     default:
-      console.log("Available commands:");
-      console.log("  - create: create the file");
-      console.log("  - add: add a new element to the list in the file");
-      console.log("  - rm: remove an element from the list in the file");
-      console.log("  - help: print all the command lines available");
-      console.log("  - ls or no more arguments: print the list in the console");
+      console.log('add, rm, delete, create, ls, help')
+    //   console.log("Available commands:");
+    //   console.log("  - create: create the file");
+    //   console.log("  - add: add a new element to the list in the file");
+    //   console.log("  - rm: remove an element from the list in the file");
+    //   console.log("  - help: print all the command lines available");
+    //   console.log("  - ls or no more arguments: print the list in the console");
       break;
   }
 }
