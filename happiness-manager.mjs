@@ -39,11 +39,13 @@ async function updateShoppingList(existingList, vips) {
   if (softs > 0) updatedList["soft-bottles"] = softs;
 
   // Food
-  const burgers = numVips;
-  const potatoes = numVips;
-
-  updatedList["burgers"] = burgers;
-  updatedList["potatoes"] = potatoes;
+  for (const vip of vips) {
+    if (vip.food === 'carnivore') {
+      updatedList["burgers"] = (updatedList["burgers"] || 0) + 1;
+      updatedList["potatoes"] = (updatedList["potatoes"] || 0) + 1;
+    }
+    // Add other food categories based on different food types if needed
+  }
 
   return updatedList;
 }
