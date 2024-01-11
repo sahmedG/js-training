@@ -1,5 +1,7 @@
 # JavaScript Training Repository
 
+![image](https://global.discourse-cdn.com/sitepoint/original/3X/b/5/b59a78e2ed76c705f3c0dcb300f3f222aefdcd99.png)
+
 Welcome to the "js-training" repository! This repository is a collection of JavaScript examples and coding problems designed to help you improve your skills in various areas of JavaScript programming, including asynchronous programming, loops, and DOM manipulation.
 
 ## Table of Contents
